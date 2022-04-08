@@ -7,14 +7,6 @@ import { Modal } from "react-bootstrap";
 function AuthModal({ show, onClose }) {
   const [toggleLogin, setToggleLogin] = useState(true);
 
-  async function onLoginWrapper() {
-    console.log("LoggedIn");
-  }
-
-  async function onGoogleLoginWrapper() {
-    console.log("LoggedIn");
-  }
-
   return (
     <Modal show={show} onHide={onClose}>
       <Modal.Header closeButton>
