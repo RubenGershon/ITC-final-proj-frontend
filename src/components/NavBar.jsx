@@ -1,31 +1,35 @@
 import React, { useContext, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import AuthModal from "./AuthModal";
-import "./NavBar.css";
 import AuthContext from "../contexts/AuthContext";
+import { NavLink } from "react-router-dom";
 
 function NavBar() {
   const [showModal, setShowModal] = useState(false);
   const { activeUser, onLogout } = useContext(AuthContext);
   return (
-    <Navbar id="i-navbar" bg="primary" variant="dark">
+    <Navbar bg="primary" variant="dark">
       <Container>
         <Nav className="me-auto">
           {activeUser && (
             <>
-              <Nav.Link href="/home">Home</Nav.Link>
-              <Nav.Link href="/profile">Profile</Nav.Link>
+              <Nav.Link to="/home" as={NavLink}>
+                Home
+              </Nav.Link>
+              <Nav.Link to="/profile" as={NavLink}>
+                Profile
+              </Nav.Link>
             </>
           )}
         </Nav>
         <Nav className="ms-auto">
           {!activeUser && (
-            <Nav.Link onClick={() => setShowModal(true)} href="#">
+            <Nav.Link onClick={() => setShowModal(true)} to="#" as={NavLink}>
               LogIn/SignUp
             </Nav.Link>
           )}
           {activeUser && (
-            <Nav.Link href="#" onClick={onLogout}>
+            <Nav.Link onClick={onLogout} to="#" as={NavLink}>
               Logout
             </Nav.Link>
           )}

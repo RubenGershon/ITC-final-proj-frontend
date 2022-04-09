@@ -3,16 +3,19 @@ import React, { useContext, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { displayLoginError } from "../lib/utils";
 import AuthContext from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function LoginModal({ closeModal }) {
   const { onLogin } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [err, setErr] = useState("");
+  const navigate = useNavigate();
 
   async function onLoginWrapper() {
     onLogin();
     console.log("LoggedIn");
+    navigate("/home");
     closeModal();
   }
 

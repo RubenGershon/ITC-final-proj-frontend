@@ -1,10 +1,8 @@
 import { Container, Nav, Navbar } from "react-bootstrap";
-import "./NavBar.css";
 
 function ModalNavBar({ toggleLogin, setToggleLogin }) {
-
   return (
-    <Navbar id="i-navbar" bg="primary" variant="dark">
+    <Navbar bg="primary" variant="dark" style={{ width: "100%" }}>
       <Container>
         <Nav className="me-auto">
           <>

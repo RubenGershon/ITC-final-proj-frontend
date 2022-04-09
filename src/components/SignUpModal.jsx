@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { displaySignUpError } from "../lib/utils";
 import AuthContext from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function SignUpModal({ closeModal }) {
   const { onSignUp } = useContext(AuthContext);
@@ -9,10 +10,12 @@ function SignUpModal({ closeModal }) {
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [signUpErr, setSignUpErr] = useState("");
+  const navigate = useNavigate();
 
   function onSignUpWrapper() {
     onSignUp();
     console.log("Signed Up");
+    navigate("/home");
     closeModal();
   }
 
