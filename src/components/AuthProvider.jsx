@@ -1,4 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
+import { login } from "../services/server";
 import AuthContext from "../contexts/AuthContext";
 
 function AuthProvider({ children }) {
@@ -7,7 +8,8 @@ function AuthProvider({ children }) {
   const [auth, setAuth] = useState("");
 
   function onLogin(email, pwd) {
-    setActiveUser(true);
+    const user = login(email, pwd)
+    setActiveUser(user);
   }
 
   function onLogout() {

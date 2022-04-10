@@ -16,6 +16,9 @@ function NavBar() {
               <Nav.Link to="/home" as={NavLink}>
                 Home
               </Nav.Link>
+              <Nav.Link to="/pets" as={NavLink}>
+                MyPets
+              </Nav.Link>
               <Nav.Link to="/profile" as={NavLink}>
                 Profile
               </Nav.Link>

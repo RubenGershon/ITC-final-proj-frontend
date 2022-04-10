@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ModalNavBar from "./ModalNavBar";
-import LoginModal from "./LoginModal";
-import SignUpModal from "./SignUpModal";
+import Login from "./Login";
+import SignUp from "./SignUp";
 import { Modal } from "react-bootstrap";
 
 function AuthModal({ show, onClose }) {
@@ -17,9 +17,9 @@ function AuthModal({ show, onClose }) {
       </Modal.Header>
       <Modal.Body>
         {toggleLogin ? (
-          <LoginModal closeModal={onClose} />
+          <Login closeModal={onClose} />
         ) : (
-          <SignUpModal closeModal={onClose} />
+          <SignUp closeModal={onClose} />
         )}
       </Modal.Body>
     </Modal>

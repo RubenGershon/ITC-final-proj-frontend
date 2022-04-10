@@ -1,6 +1,7 @@
 import React from "react";
 
-function HomePage(props) {
+
+function HomePage() {
   return <div>HOME PAGE</div>;
 }
 

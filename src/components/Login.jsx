@@ -5,14 +5,14 @@ import { displayLoginError } from "../lib/utils";
 import AuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function LoginModal({ closeModal }) {
+function Login({ closeModal }) {
   const { onLogin } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [err, setErr] = useState("");
   const navigate = useNavigate();
 
-  async function onLoginWrapper() {
+  async function handleLogin() {
     onLogin();
     console.log("LoggedIn");
     navigate("/home");
@@ -43,11 +43,11 @@ function LoginModal({ closeModal }) {
         />
       </Form.Group>
       {err && <Alert variant="danger">{displayLoginError(err)}</Alert>}
-      <Button variant="outline-primary" type="button" onClick={onLoginWrapper}>
+      <Button variant="outline-primary" type="button" onClick={handleLogin}>
         Login with email & password
       </Button>
     </Form>
   );
 }
 
-export default LoginModal;
+export default Login;

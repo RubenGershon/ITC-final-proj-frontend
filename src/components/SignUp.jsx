@@ -4,9 +4,11 @@ import { displaySignUpError } from "../lib/utils";
 import AuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-function SignUpModal({ closeModal }) {
+function SignUp({ closeModal }) {
   const { onSignUp } = useContext(AuthContext);
-  const [userName, setUserName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [pwd, setPwd] = useState("");
   const [signUpErr, setSignUpErr] = useState("");
@@ -20,20 +22,29 @@ function SignUpModal({ closeModal }) {
   }
 
   return (
-    <div id="i-sign-up">
+    <>
       <h5 className="display-5">Create a new acount!</h5>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Full name</Form.Label>
+          <Form.Label>First Name</Form.Label>
           <Form.Control
             type="name"
-            placeholder="Enter full name"
-            value={userName}
-            onChange={(e) => setUserName(e.target.value)}
+            placeholder="Enter first name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Last Name</Form.Label>
+          <Form.Control
+            type="name"
+            placeholder="Enter last name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email Address</Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -44,12 +55,30 @@ function SignUpModal({ closeModal }) {
             We'll never share your email with anyone else.
           </Form.Text>
         </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Phone Number</Form.Label>
+          <Form.Control
+            type="tel"
+            placeholder="Enter your phone number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="Password"
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password Confirmation</Form.Label>
+          <Form.Control
+            type="password"
+            placeholder="Re-type your Password"
             value={pwd}
             onChange={(e) => setPwd(e.target.value)}
           />
@@ -65,8 +94,8 @@ function SignUpModal({ closeModal }) {
           Create Account
         </Button>
       </Form>
-    </div>
+    </>
   );
 }
 
-export default SignUpModal;
+export default SignUp;
