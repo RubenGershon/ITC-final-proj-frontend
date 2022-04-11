@@ -10,15 +10,24 @@ function SignUp({ closeModal }) {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
-  const [pwd, setPwd] = useState("");
+  const [password, setPwd] = useState("");
   const [signUpErr, setSignUpErr] = useState("");
   const navigate = useNavigate();
 
-  function onSignUpWrapper() {
-    onSignUp();
-    console.log("Signed Up");
-    navigate("/home");
-    closeModal();
+  async function onSignUpWrapper() {
+    const response = await onSignUp({
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      password,
+    });
+    if (response.status === "ok") {
+      navigate("/home");
+      closeModal();
+    } else {
+      setSignUpErr(response.message);
+    }
   }
 
   return (
@@ -70,7 +79,7 @@ function SignUp({ closeModal }) {
           <Form.Control
             type="password"
             placeholder="Password"
-            value={pwd}
+            value={password}
             onChange={(e) => setPwd(e.target.value)}
           />
         </Form.Group>
@@ -79,7 +88,7 @@ function SignUp({ closeModal }) {
           <Form.Control
             type="password"
             placeholder="Re-type your Password"
-            value={pwd}
+            value={password}
             onChange={(e) => setPwd(e.target.value)}
           />
         </Form.Group>

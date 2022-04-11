@@ -1,8 +1,20 @@
 import axios from "axios";
+const api = axios.create({
+  baseURL: "http://localhost:8080",
+});
 
-async function login(username, password) {
-  //const response = await api.post("/auth/login", { username, password });
-  return { userId: "11" };
+async function signup(signUpDataObj) {
+  try {
+    const response = await api.post("/auth/signup", signUpDataObj);
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
+
+async function login(email, password) {
+  const response = await api.post("/auth/login", { email, password });
+  return response.data;
 }
 
 async function fetchPet(petId) {
@@ -66,4 +78,4 @@ async function fetchSavedPets(activeUser) {
   ];
 }
 
-export { login, fetchPet, fetchPets, fetchSavedPets };
+export { signup, login, fetchPet, fetchPets, fetchSavedPets };

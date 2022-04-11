@@ -1,14 +1,13 @@
 import React, { useState } from "react";
-import { login } from "../services/server";
+import { signup, login } from "../services/server";
 import AuthContext from "../contexts/AuthContext";
 
 function AuthProvider({ children }) {
   const [activeUser, setActiveUser] = useState("");
   const [isAuthLoading, setIsAuthLoading] = useState(true);
-  const [auth, setAuth] = useState("");
 
   function onLogin(email, pwd) {
-    const user = login(email, pwd)
+    const user = login(email, pwd);
     setActiveUser(user);
   }
 
@@ -16,8 +15,10 @@ function AuthProvider({ children }) {
     setActiveUser(false);
   }
 
-  function onSignUp(userName, email, pwd, setSignUpErr) {
-    setActiveUser(true);
+  async function onSignUp(signUpDataObj) {
+    const response = await signup(signUpDataObj);
+    if (response.status === "ok") setActiveUser(response.user);
+    return response;
   }
 
   return (
