@@ -1,7 +1,17 @@
 import axios from "axios";
 const api = axios.create({
   baseURL: "http://localhost:8080",
+  withCredentials: true,
 });
+
+async function login(email, password) {
+  try {
+    const response = await api.post("/auth/login", { email, password });
+    return response.data;
+  } catch (error) {
+    return error.response.data;
+  }
+}
 
 async function signup(signUpDataObj) {
   try {
@@ -10,11 +20,6 @@ async function signup(signUpDataObj) {
   } catch (error) {
     return error.response.data;
   }
-}
-
-async function login(email, password) {
-  const response = await api.post("/auth/login", { email, password });
-  return response.data;
 }
 
 async function fetchPet(petId) {

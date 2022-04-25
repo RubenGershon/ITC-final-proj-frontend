@@ -1,7 +1,5 @@
-import { Alert } from "bootstrap";
 import React, { useContext, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import { displayLoginError } from "../lib/utils";
+import { Alert, Button, Form } from "react-bootstrap";
 import AuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -13,10 +11,13 @@ function Login({ closeModal }) {
   const navigate = useNavigate();
 
   async function handleLogin() {
-    onLogin();
-    console.log("LoggedIn");
-    navigate("/home");
-    closeModal();
+    const response = await onLogin(email, pwd);
+    if (response.status === "ok") {
+      closeModal();
+      navigate("/home");
+    } else {
+      setErr(response.message);
+    }
   }
 
   return (
@@ -42,10 +43,12 @@ function Login({ closeModal }) {
           onChange={(e) => setPwd(e.target.value)}
         />
       </Form.Group>
-      {err && <Alert variant="danger">{displayLoginError(err)}</Alert>}
       <Button variant="outline-primary" type="button" onClick={handleLogin}>
         Login with email & password
       </Button>
+      <br />
+      <br />
+      {err ? <Alert variant="danger">{err}</Alert> : ""}
     </Form>
   );
 }

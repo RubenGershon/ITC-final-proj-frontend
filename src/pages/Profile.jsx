@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
-import { displaySignUpError } from "../lib/utils";
 import { useNavigate } from "react-router-dom";
 
 function Profile({ onUpdateProfile }) {
@@ -75,9 +74,7 @@ function Profile({ onUpdateProfile }) {
           <Form.Label>Bio</Form.Label>
           <Form.Control as="textarea" rows={3} placeholder="Type here..." />
         </Form.Group>
-        {signUpErr && (
-          <Alert variant="danger">{displaySignUpError(signUpErr)}</Alert>
-        )}
+        {signUpErr && <Alert variant="danger">{signUpErr}</Alert>}
         <Button
           variant="outline-primary"
           type="button"

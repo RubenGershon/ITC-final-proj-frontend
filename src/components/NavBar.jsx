@@ -10,6 +10,9 @@ function NavBar() {
   return (
     <Navbar bg="primary" variant="dark">
       <Container>
+        <Navbar.Brand to="/" as={NavLink}>
+          Pet Adoption
+        </Navbar.Brand>
         <Nav className="me-auto">
           {activeUser && (
             <>

@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import AuthContext from "../contexts/AuthContext";
 
 
 function HomePage() {
-  return <div>HOME PAGE</div>;
+  const { onLogin, activeUser } = useContext(AuthContext);
+  return <div>{console.log(activeUser)}HOME PAGE</div>;
 }
 
 export default HomePage;
