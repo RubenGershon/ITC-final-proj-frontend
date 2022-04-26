@@ -1,34 +1,35 @@
-import React, { useContext, useEffect, useReducer, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PetCard from "../components/PetCard";
 import { Alert, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
-import { fetchPets, fetchSavedPets } from "../services/server";
+import server from "../services/server.js";
 
 function PetsPage() {
   const { activeUser } = useContext(AuthContext);
-  const [myPets, setMyPets] = useState("");
+  const [caredPets, setCaredPets] = useState("");
   const [savedPets, setSavedPets] = useState("");
   const [displayMyPets, setDisplayMyPets] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
-      setMyPets(await fetchPets(activeUser));
-      setSavedPets(await fetchSavedPets(activeUser));
+      const userData = await server.getUserData();
+      setCaredPets(await server.getPetsByIds(userData.caredPetsIds));
+      setSavedPets(await server.getPetsByIds(userData.savedPetsIds));
     }
     loadData();
   }, [activeUser]);
 
   function myPetsDisplay() {
-    if (!myPets)
+    if (caredPets.length === 0)
       return (
         <Alert variant="info">
           You currently do not own or foster any pets
         </Alert>
       );
 
-    return myPets.map((pet, i) => (
+    return caredPets.map((pet, i) => (
       <PetCard
         key={i + 1}
         petData={pet}

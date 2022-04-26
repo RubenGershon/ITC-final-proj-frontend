@@ -6,10 +6,10 @@ function PetCard({ petData, onSeeMore }) {
   
   return (
     <Card border="primary" style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={petData.imgUrl} />
+      <Card.Img variant="top" src={petData.imageUrl} />
       <Card.Body>
         <Card.Title>{petData.name}</Card.Title>
-        <Card.Text>Adoption status: {petData.status}</Card.Text>
+        <Card.Text>Adoption status: {petData.adoptionStatus}</Card.Text>
         
         <Button variant="primary" onClick={onSeeMore}>
           SEE MORE

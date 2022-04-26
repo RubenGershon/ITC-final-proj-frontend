@@ -4,6 +4,7 @@ import NavBar from "./components/NavBar";
 import WelcomePage from "./pages/WelcomePage";
 import PetsPage from "./pages/PetsPage";
 import PetPage from "./pages/PetPage";
+import SearchPage from "./pages/SearchPage"
 import NotFoundPage from "./pages/NotFoundPage";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -29,6 +30,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <PetsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/search"
+            element={
+              <ProtectedRoute>
+                <SearchPage />
               </ProtectedRoute>
             }
           />

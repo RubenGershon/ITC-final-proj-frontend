@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signup, login } from "../services/server";
+import server from "../services/server";
 import AuthContext from "../contexts/AuthContext";
 
 function AuthProvider({ children }) {
@@ -8,7 +8,7 @@ function AuthProvider({ children }) {
   );
 
   async function onLogin(email, pwd) {
-    const response = await login(email, pwd);
+    const response = await server.login(email, pwd);
     if (response.status === "ok") {
       localStorage.activeUser = JSON.stringify(response.data);
       setActiveUser(response.data);
@@ -17,7 +17,7 @@ function AuthProvider({ children }) {
   }
 
   async function onSignUp(signUpDataObj) {
-    const response = await signup(signUpDataObj);
+    const response = await server.signup(signUpDataObj);
     if (response.status === "ok") {
       localStorage.activeUser = JSON.stringify(response.data);
       setActiveUser(response.data);

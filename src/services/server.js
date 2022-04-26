@@ -30,65 +30,34 @@ async function signup(signUpDataObj) {
   }
 }
 
-async function fetchPet(petId) {
-  return {
-    id: "1",
-    userId: "11",
-    name: "Pita",
-    type: "dog",
-    color: "brown",
-    height: "0.50",
-    weight: "5",
-    bio: "Some very interesting things to say",
-    status: "adopted",
-    imgUrl: "https://images.dog.ceo/breeds/malamute/n02110063_3853.jpg",
-  };
+async function getUserData() {
+  console.log("get user data")
+  try {
+    const response = await api.get("/user");
+    return response.data.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
 }
 
-async function fetchPets(activeUser) {
-  return [
-    {
-      id: "1",
-      userId: "11",
-      name: "Pita",
-      type: "dog",
-      color: "brown",
-      height: "0.50",
-      weight: "5",
-      bio: "Some very interesting things to say",
-      status: "adopted",
-      imgUrl: "https://images.dog.ceo/breeds/malamute/n02110063_3853.jpg",
-    },
-    {
-      id: "2",
-      userId: "12",
-      name: "Rex",
-      type: "dog",
-      color: "brown",
-      height: "0.50",
-      weight: "5",
-      bio: "Some very interesting things to say",
-      status: "fostered",
-      imgUrl: "https://images.dog.ceo/breeds/malamute/n02110063_3853.jpg",
-    },
-  ];
+async function getPetsByIds(listOfPetsIds) {
+  console.log("get pets by id");
+  try {
+    const response = await api.get("/pet/byIDs", {
+      params: { listOfPetsIds: JSON.stringify(listOfPetsIds) },
+    });
+    return response.data.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
 }
 
-async function fetchSavedPets(activeUser) {
-  return [
-    {
-      id: "3",
-      userId: "",
-      name: "Fifi",
-      type: "dog",
-      color: "brown",
-      height: "0.50",
-      weight: "5",
-      bio: "Some very interesting things to say",
-      status: "free",
-      imgUrl: "https://images.dog.ceo/breeds/malamute/n02110063_3853.jpg",
-    },
-  ];
-}
-
-export { signup, login, fetchPet, fetchPets, fetchSavedPets };
+export default { signup, login, getUserData, getPetsByIds };

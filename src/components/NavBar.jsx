@@ -22,6 +22,9 @@ function NavBar() {
               <Nav.Link to="/pets" as={NavLink}>
                 MyPets
               </Nav.Link>
+              <Nav.Link to="/search" as={NavLink}>
+                Search for a Pet
+              </Nav.Link>
               <Nav.Link to="/profile" as={NavLink}>
                 Profile
               </Nav.Link>
