@@ -10,8 +10,8 @@ function AuthProvider({ children }) {
   async function onLogin(email, pwd) {
     const response = await login(email, pwd);
     if (response.status === "ok") {
-      localStorage.activeUser = JSON.stringify(response.user);
-      setActiveUser(response.user);
+      localStorage.activeUser = JSON.stringify(response.data);
+      setActiveUser(response.data);
     }
     return response;
   }
@@ -19,8 +19,8 @@ function AuthProvider({ children }) {
   async function onSignUp(signUpDataObj) {
     const response = await signup(signUpDataObj);
     if (response.status === "ok") {
-      localStorage.activeUser = JSON.stringify(response.user);
-      setActiveUser(response.user);
+      localStorage.activeUser = JSON.stringify(response.data);
+      setActiveUser(response.data);
     }
     return response;
   }

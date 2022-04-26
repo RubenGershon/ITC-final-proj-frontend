@@ -41,9 +41,12 @@ function SignUp({ closeModal }) {
       if (response.status === "ok") {
         closeModal();
         navigate("/home");
+      } else {
+        setSignUpErr(response.message);
       }
     } catch (err) {
-      setSignUpErr(err.response.data.message);
+      if (err.response) setSignUpErr(err.response.data.message);
+      else setSignUpErr(err);
     }
   }
 
@@ -56,6 +59,7 @@ function SignUp({ closeModal }) {
           placeholder="Enter first name"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
+          style={{ border: firstName ? "solid green" : "" }}
         />
       </Form.Group>
 
@@ -112,6 +116,8 @@ function SignUp({ closeModal }) {
       <Button variant="outline-primary" type="button" onClick={onSignUpWrapper}>
         Create Account
       </Button>
+      <br />
+      <br />
       {signUpErr && <Alert variant="danger">{signUpErr}</Alert>}
     </Form>
   );

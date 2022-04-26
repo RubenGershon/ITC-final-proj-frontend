@@ -9,7 +9,11 @@ async function login(email, password) {
     const response = await api.post("/auth/login", { email, password });
     return response.data;
   } catch (error) {
-    return error.response.data;
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
   }
 }
 
@@ -18,7 +22,11 @@ async function signup(signUpDataObj) {
     const response = await api.post("/auth/signup", signUpDataObj);
     return response.data;
   } catch (error) {
-    return error.response.data;
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
   }
 }
 
