@@ -31,7 +31,6 @@ async function signup(signUpDataObj) {
 }
 
 async function getUserData() {
-  console.log("get user data")
   try {
     const response = await api.get("/user");
     return response.data.data;
@@ -45,7 +44,6 @@ async function getUserData() {
 }
 
 async function getPetsByIds(listOfPetsIds) {
-  console.log("get pets by id");
   try {
     const response = await api.get("/pet/byIDs", {
       params: { listOfPetsIds: JSON.stringify(listOfPetsIds) },
@@ -60,4 +58,53 @@ async function getPetsByIds(listOfPetsIds) {
   }
 }
 
-export default { signup, login, getUserData, getPetsByIds };
+async function getPetsByQuery(paramsDict) {
+  try {
+    const response = await api.get("/pet", {
+      params: paramsDict,
+    });
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
+async function savePet(petId) {
+  try {
+    const response = await api.post(`/pet/${petId}/save`);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
+async function unsavePet(petId) {
+  try {
+    const response = await api.delete(`/pet/${petId}/save`);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
+export default {
+  signup,
+  login,
+  getUserData,
+  getPetsByIds,
+  getPetsByQuery,
+  savePet,
+  unsavePet,
+};

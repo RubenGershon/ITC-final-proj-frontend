@@ -1,22 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Button, Card } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import AuthContext from "../contexts/AuthContext";
 import server from "../services/server";
+import { useNavigate } from "react-router-dom";
 
 function PetPage() {
-  const petId = window.location.href.split("pets/")[1];
-  const [pet, setPet] = useState("");
+  const location = useLocation();
+  const [pet, setPet] = useState(location.state);
+  const [user, setUser] = useState({ savedPetsIds: [] });
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
-      setPet();
+      const response = await server.getUserData();
+      setUser(response);
     }
     loadData();
   }, []);
 
   function returnAdoptOrFosterPet() {
-    if (pet.status === "fostered")
+    if (pet.adoptionStatus === "fostered")
       return <Button variant="primary">Adopt {pet.name}</Button>;
-    if (pet.status === "adopted")
+    if (pet.adoptionStatus === "adopted")
       return <Button variant="primary">Foster {pet.name}</Button>;
   }
   function isPetOwnedByUser() {
@@ -64,10 +70,30 @@ function PetPage() {
   }
 
   function saveOrUnsaveBtn() {
-    if (true) {
+    if (user.savedPetsIds.find((id) => id === pet._id)) {
       return (
-        <Button className="m-1" variant="primary">
-          Save {pet.name} to your list
+        <Button
+          className="m-1"
+          variant="primary"
+          onClick={async () => {
+            await server.unsavePet(pet._id);
+            navigate("/pets");
+          }}
+        >
+          Unsave {pet.name} from your pet's list
+        </Button>
+      );
+    } else {
+      return (
+        <Button
+          className="m-1"
+          variant="primary"
+          onClick={async () => {
+            await server.savePet(pet._id);
+            navigate("/pets");
+          }}
+        >
+          Save {pet.name} to your pet's list
         </Button>
       );
     }
@@ -75,7 +101,7 @@ function PetPage() {
 
   return (
     <Card border="primary" style={{ width: "25rem", margin: "auto" }}>
-      <Card.Img variant="top" src={pet.imgUrl} />
+      <Card.Img variant="top" src={pet.imageUrl} />
       <Card.Body>
         <Card.Title>{pet.name}</Card.Title>
         <Card.Text>
@@ -83,7 +109,7 @@ function PetPage() {
           Color: {pet.color} <br />
           Weight: {pet.weight} <br />
           Height: {pet.height} <br />
-          Adoption status: {pet.status} <br />
+          Adoption status: {pet.adoptionStatus} <br />
           Bio: {pet.bio} <br />
         </Card.Text>
         {displayReturnOrAdoptAndFosterBtn()}

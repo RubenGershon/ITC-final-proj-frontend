@@ -42,7 +42,7 @@ function App() {
             }
           />
           <Route
-            path="/pets/:id"
+            path="/pet/:id"
             element={
               <ProtectedRoute>
                 <PetPage />

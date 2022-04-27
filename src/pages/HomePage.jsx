@@ -4,7 +4,7 @@ import AuthContext from "../contexts/AuthContext";
 
 function HomePage() {
   const { onLogin, activeUser } = useContext(AuthContext);
-  return <div>{console.log(activeUser)}HOME PAGE</div>;
+  return <div>HOME PAGE</div>;
 }
 
 export default HomePage;
