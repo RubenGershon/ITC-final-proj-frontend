@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 function PetPage() {
   const location = useLocation();
   const [pet, setPet] = useState(location.state);
-  const [user, setUser] = useState({ savedPetsIds: [] });
+  const [user, setUser] = useState({ savedPetsIds: [], caredPetsIds: [] });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,54 +19,56 @@ function PetPage() {
     loadData();
   }, []);
 
-  function returnAdoptOrFosterPet() {
-    if (pet.adoptionStatus === "fostered")
-      return <Button variant="primary">Adopt {pet.name}</Button>;
-    if (pet.adoptionStatus === "adopted")
-      return <Button variant="primary">Foster {pet.name}</Button>;
+  function adoptBtn() {
+    return (
+      <Button
+        className="m-1"
+        variant="primary"
+        onClick={async () => {
+          await server.adoptPet(pet._id, { adoptionStatus: "adopted" });
+          navigate("/pets");
+        }}
+      >
+        Adopt {pet.name}
+      </Button>
+    );
   }
-  function isPetOwnedByUser() {
-    return true;
+
+  function fosterBtn() {
+    return (
+      <Button
+        className="m-1"
+        variant="primary"
+        onClick={async () => {
+          await server.adoptPet(pet._id, { adoptionStatus: "fostered" });
+          navigate("/pets");
+        }}
+      >
+        Foster {pet.name}
+      </Button>
+    );
   }
 
   function displayReturnOrAdoptAndFosterBtn() {
-    if (isPetOwnedByUser()) {
+    if (user.caredPetsIds.find((id) => id === pet._id)) {
       return (
-        <Button className="m-1" variant="primary">
-          Return {pet.name} to Adoption center...
-        </Button>
+        <>
+          <Button className="m-1" variant="primary">
+            Return {pet.name} to Adoption center...
+          </Button>
+          {pet.adoptionStatus === "adopted" && fosterBtn()}
+          {pet.adoptionStatus === "fostred" && adoptBtn()}
+        </>
       );
     } else {
       return (
         <>
-          <Button className="m-1" variant="primary">
-            Adopt {pet.name}
-          </Button>
+          {adoptBtn()}
           <br />
-          <Button className="m-1" variant="primary">
-            Foster {pet.name}
-          </Button>
+          {fosterBtn()}
         </>
       );
     }
-  }
-
-  function displayAdoptOrFosterBtn() {
-    if (isPetOwnedByUser()) {
-      if (pet.status === "adopted")
-        return (
-          <Button className="m-1" variant="primary">
-            Foster {pet.name}
-          </Button>
-        );
-      if (pet.status === "fostered")
-        return (
-          <Button className="m-1" variant="primary">
-            Adopt {pet.name}
-          </Button>
-        );
-    }
-    return "";
   }
 
   function saveOrUnsaveBtn() {
@@ -113,7 +115,6 @@ function PetPage() {
           Bio: {pet.bio} <br />
         </Card.Text>
         {displayReturnOrAdoptAndFosterBtn()}
-        {displayAdoptOrFosterBtn()}
         {saveOrUnsaveBtn()}
       </Card.Body>
     </Card>

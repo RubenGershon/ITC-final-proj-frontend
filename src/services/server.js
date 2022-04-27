@@ -99,6 +99,19 @@ async function unsavePet(petId) {
   }
 }
 
+async function adoptPet(petId, data) {
+  try {
+    const response = await api.post(`/pet/${petId}/adopt`, data);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 export default {
   signup,
   login,
@@ -107,4 +120,5 @@ export default {
   getPetsByQuery,
   savePet,
   unsavePet,
+  adoptPet,
 };
