@@ -1,54 +1,40 @@
 import React, { useContext, useEffect, useState } from "react";
-import PetCard from "../components/PetCard";
+import DisplayPets from "../components/DisplayPets";
 import { Alert, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
+import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
 
 function PetsPage() {
-  const { activeUser } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
   const [caredPets, setCaredPets] = useState("");
   const [savedPets, setSavedPets] = useState("");
   const [displayMyPets, setDisplayMyPets] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
-      const userData = await server.getUserData();
-      setCaredPets(await server.getPetsByIds(userData.caredPetsIds));
-      setSavedPets(await server.getPetsByIds(userData.savedPetsIds));
+      const responses = await Promise.all([
+        await server.getPetsByIds(user.caredPetsIds),
+        await server.getPetsByIds(user.savedPetsIds),
+      ]);
+      setCaredPets(responses[0]);
+      setSavedPets(responses[1]);
     }
     loadData();
-  }, [activeUser]);
+  }, []);
 
   function myPetsDisplay() {
-    if (caredPets.length === 0) {
+    if (caredPets.length === 0)
       return (
         <Alert variant="info">
           You currently do not own or foster any pets
         </Alert>
       );
-    } else {
-      return caredPets.map((pet, i) => (
-        <PetCard
-          key={i + 1}
-          petData={pet}
-          onSeeMore={() => navigate("/pets/" + pet._id)}
-        />
-      ));
-    }
+    else return <DisplayPets petsToDisplay={caredPets} />;
   }
 
   function mySavedPetsDisplay() {
     if (!savedPets) return <Alert variant="info">No saved pets</Alert>;
-
-    return savedPets.map((pet, i) => (
-      <PetCard
-        key={i + 1}
-        petData={pet}
-        onSeeMore={() => navigate("/pets/" + (i + 1).toString())}
-      />
-    ));
+    else return <DisplayPets petsToDisplay={savedPets} />;
   }
 
   return (

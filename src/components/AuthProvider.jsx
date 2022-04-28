@@ -32,6 +32,7 @@ function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={{ activeUser, onLogin, onLogout, onSignUp }}>
+      {console.log("PING AUTH-PROVIDER: ", activeUser)}
       {children}
     </AuthContext.Provider>
   );
