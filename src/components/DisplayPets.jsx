@@ -10,7 +10,7 @@ function DisplayPets({ petsToDisplay }) {
       <PetCard
         key={pet._id}
         petData={pet}
-        onSeeMore={() => navigate("/pet/" + pet.name, { state: pet })}
+        onSeeMore={() => navigate("/pet/" + pet._id)}
       />
     ));
   }

@@ -22,20 +22,21 @@ function PetsPage() {
   }, [activeUser]);
 
   function myPetsDisplay() {
-    if (caredPets.length === 0)
+    if (caredPets.length === 0) {
       return (
         <Alert variant="info">
           You currently do not own or foster any pets
         </Alert>
       );
-
-    return caredPets.map((pet, i) => (
-      <PetCard
-        key={i + 1}
-        petData={pet}
-        onSeeMore={() => navigate("/pets/" + (i + 1).toString())}
-      />
-    ));
+    } else {
+      return caredPets.map((pet, i) => (
+        <PetCard
+          key={i + 1}
+          petData={pet}
+          onSeeMore={() => navigate("/pets/" + pet._id)}
+        />
+      ));
+    }
   }
 
   function mySavedPetsDisplay() {

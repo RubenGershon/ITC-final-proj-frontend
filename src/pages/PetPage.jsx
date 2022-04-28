@@ -1,20 +1,22 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useLocation } from "react-router-dom";
-import AuthContext from "../contexts/AuthContext";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
 
 function PetPage() {
-  const location = useLocation();
-  const [pet, setPet] = useState(location.state);
+  const [pet, setPet] = useState("");
   const [user, setUser] = useState({ savedPetsIds: [], caredPetsIds: [] });
   const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
-      const response = await server.getUserData();
-      setUser(response);
+      const responses = await Promise.all([
+        await server.getUserData(),
+        await server.getPetById(window.location.href.split("/pet/")[1]),
+      ]);
+      setUser(responses[0]);
+      setPet(responses[1]);
     }
     loadData();
   }, []);
@@ -53,7 +55,14 @@ function PetPage() {
     if (user.caredPetsIds.find((id) => id === pet._id)) {
       return (
         <>
-          <Button className="m-1" variant="primary">
+          <Button
+            className="m-1"
+            variant="primary"
+            onClick={async () => {
+              await server.returnPet(pet._id);
+              navigate("/pets");
+            }}
+          >
             Return {pet.name} to Adoption center...
           </Button>
           {pet.adoptionStatus === "adopted" && fosterBtn()}

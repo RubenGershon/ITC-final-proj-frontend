@@ -43,6 +43,19 @@ async function getUserData() {
   }
 }
 
+async function getPetById(petId) {
+  try {
+    const response = await api.get(`/pet/${petId}`);
+    return response.data.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 async function getPetsByIds(listOfPetsIds) {
   try {
     const response = await api.get("/pet/byIDs", {
@@ -112,13 +125,28 @@ async function adoptPet(petId, data) {
   }
 }
 
+async function returnPet(petId) {
+  try {
+    const response = await api.post(`/pet/${petId}/return`);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 export default {
   signup,
   login,
   getUserData,
+  getPetById,
   getPetsByIds,
   getPetsByQuery,
   savePet,
   unsavePet,
   adoptPet,
+  returnPet,
 };
