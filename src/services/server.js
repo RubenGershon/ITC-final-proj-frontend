@@ -30,10 +30,36 @@ async function signup(signUpDataObj) {
   }
 }
 
+async function logout(signUpDataObj) {
+  try {
+    const response = await api.post("/auth/logout", signUpDataObj);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 async function getUserData() {
   try {
     const response = await api.get("/user");
     return response.data.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
+async function updateUser(updatedDataObj) {
+  try {
+    const response = await api.put("/user", updatedDataObj);
+    return response.data;
   } catch (error) {
     if (error.response) {
       return error.response.data;
@@ -141,7 +167,9 @@ async function returnPet(petId) {
 export default {
   signup,
   login,
+  logout,
   getUserData,
+  updateUser,
   getPetById,
   getPetsByIds,
   getPetsByQuery,

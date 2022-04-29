@@ -2,25 +2,36 @@ import React, { useContext, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
+import AuthContext from "../contexts/AuthContext";
+import server from "../services/server";
 
-function Profile({ onUpdateProfile }) {
+function Profile() {
   const { user } = useContext(UserContext);
+  const { onLogout } = useContext(AuthContext);
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
   const [email, setEmail] = useState(user.email);
   const [bio, setBio] = useState(user.bio);
-  const [pwd, setPwd] = useState("");
-  const [pwdConf, setPwdConf] = useState("");
-  const [signUpErr, setSignUpErr] = useState("");
+  const [password, setPwd] = useState("");
+  const [passwordConf, setPwdConf] = useState("");
+  const [pwdConfErr, setPwdConfErr] = useState("");
   const [activeBtn, setActiveBtn] = useState(false);
   const [updates, setUpdates] = useState({});
+  const [serverErr, setServerErr] = useState("");
   const navigate = useNavigate();
 
-  function onUpdateProfileWrapper() {
-    onUpdateProfile();
-    console.log("Signed Up");
-    navigate("/home");
+  async function handleUpdate() {
+    const response = await server.updateUser(updates);
+    if (response.status === "ok") {
+      if (user.email === email) navigate("/home");
+      else {
+        server.logout();
+        onLogout();
+      }
+    } else {
+      setServerErr(response.message);
+    }
   }
 
   function handleChange(newValObj) {
@@ -29,33 +40,45 @@ function Profile({ onUpdateProfile }) {
     // for example, if a user was named "a", then changed name to "b" (without clicking save btn)
     // and then reverse back to "a", btn will still be disabled.
 
-    console.log(updates);
-
     let fieldUpdated = "";
     let isFieldUpdated = "";
-    if ("firstName" in newValObj) {
+    if (newValObj.firstName) {
       fieldUpdated = "firstName";
       isFieldUpdated = newValObj.firstName !== user.firstName;
     }
-    if ("lastName" in newValObj) {
+    if (newValObj.lastName) {
       fieldUpdated = "lastName";
       isFieldUpdated = newValObj.lastName !== user.lastName;
     }
-    if ("email" in newValObj) {
+    if (newValObj.email) {
       fieldUpdated = "email";
       isFieldUpdated = newValObj.email !== user.email;
     }
-    if ("phoneNumber" in newValObj) {
+    if (newValObj.phoneNumber) {
       fieldUpdated = "phoneNumber";
       isFieldUpdated = newValObj.phoneNumber !== user.phoneNumber;
     }
 
+    if (
+      newValObj.passwordConf &&
+      password &&
+      password === newValObj.passwordConf
+    ) {
+      fieldUpdated = "passwordConf";
+      isFieldUpdated = newValObj.passwordConf !== "" && password !== "";
+      setPwdConfErr("");
+    } else if (newValObj.passwordConf) {
+      fieldUpdated = "passwordConf";
+      setPwdConfErr("wrong password confirmation");
+    }
+
     const updatesCopy = Object.assign({}, updates);
-    if (!isFieldUpdated && fieldUpdated in updates) {
+    if (!isFieldUpdated) {
       delete updatesCopy[fieldUpdated];
     } else {
       updatesCopy[fieldUpdated] = newValObj[fieldUpdated];
     }
+
     setUpdates(updatesCopy);
 
     if (Object.keys(updatesCopy).length === 0) {
@@ -101,7 +124,7 @@ function Profile({ onUpdateProfile }) {
             }}
           />
           <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
+            Changing your email will automatically logged you out.
           </Form.Text>
         </Form.Group>
         <Form.Group className="mb-3">
@@ -117,12 +140,14 @@ function Profile({ onUpdateProfile }) {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Change Password</Form.Label>
+          <Form.Label>Update Password</Form.Label>
           <Form.Control
             type="password"
             placeholder="New Password"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
+            value={password}
+            onChange={(e) => {
+              setPwd(e.target.value);
+            }}
           />
         </Form.Group>
         <Form.Group className="mb-3">
@@ -130,10 +155,14 @@ function Profile({ onUpdateProfile }) {
           <Form.Control
             type="password"
             placeholder="Re-type Password"
-            value={pwdConf}
-            onChange={(e) => setPwdConf(e.target.value)}
+            value={passwordConf}
+            onChange={(e) => {
+              setPwdConf(e.target.value);
+              handleChange({ passwordConf: e.target.value });
+            }}
           />
         </Form.Group>
+        {pwdConfErr && <Alert variant="danger">{pwdConfErr}</Alert>}
         <Form.Group className="mb-3">
           <Form.Label>Bio</Form.Label>
           <Form.Control
@@ -144,16 +173,16 @@ function Profile({ onUpdateProfile }) {
             placeholder={user.bio}
           />
         </Form.Group>
-        {signUpErr && <Alert variant="danger">{signUpErr}</Alert>}
         <Button
           active={activeBtn}
           disabled={!activeBtn}
           variant="outline-primary"
           type="button"
-          onClick={onUpdateProfileWrapper}
+          onClick={handleUpdate}
         >
           Save Modifications
         </Button>
+        {serverErr && <Alert variant="danger">{serverErr}</Alert>}
       </Form>
     </>
   );
