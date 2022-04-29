@@ -69,6 +69,33 @@ async function updateUser(updatedDataObj) {
   }
 }
 
+async function addPet(petDataObj) {
+  // Need to send data as form data because of pet image upload
+  try {
+    const formData = new FormData();
+    formData.append("type", petDataObj.type);
+    formData.append("name", petDataObj.name);
+    formData.append("adoptionStatus", petDataObj.adoptionStatus);
+    formData.append("breed", petDataObj.breed);
+    formData.append("color", petDataObj.color);
+    formData.append("weight", petDataObj.weight);
+    formData.append("height", petDataObj.height);
+    formData.append("hypoallergenic", petDataObj.hypoallergenic);
+    formData.append("dietaryRestrictions", petDataObj.dietaryRestrictions);
+    formData.append("bio", petDataObj.bio);
+    formData.append("image", petDataObj.image);
+
+    const response = await api.post("/pet", formData);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 async function getPetById(petId) {
   try {
     const response = await api.get(`/pet/${petId}`);
@@ -170,6 +197,7 @@ export default {
   logout,
   getUserData,
   updateUser,
+  addPet,
   getPetById,
   getPetsByIds,
   getPetsByQuery,
