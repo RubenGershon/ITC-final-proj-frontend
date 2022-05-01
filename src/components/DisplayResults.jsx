@@ -1,16 +1,21 @@
 import React from "react";
+import { Col, Container, Row } from "react-bootstrap";
 
 function DisplayResults({ elementsToDisplay, ChildComponent, action }) {
   return (
-    <>
-      {elementsToDisplay.map((element) => (
-        <ChildComponent
-          key={element._id}
-          data={element}
-          actionBtn={() => action(element)}
-        />
-      ))}
-    </>
+    <Container>
+      <Row>
+        {elementsToDisplay.map((element) => (
+          <Col md={3} key={element._id}>
+            <ChildComponent
+              key={element._id}
+              data={element}
+              actionBtn={() => action(element)}
+            />
+          </Col>
+        ))}
+      </Row>
+    </Container>
   );
 }
 

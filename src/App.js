@@ -1,4 +1,4 @@
-import AdminPage from "./pages/adminPage";
+import AdminPage from "./pages/AdminPage";
 import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import NavBar from "./components/NavBar";

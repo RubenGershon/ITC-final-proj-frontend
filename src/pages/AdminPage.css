@@ -1,0 +1,14 @@
+#adminPage {
+  display: flex;
+  flex-direction: column;
+  height: 94%;
+}
+
+#actionBtns {
+  flex-basis: 10%;
+  border: solid red;
+}
+
+#adminDisplayResults {
+  flex-basis: 90%;
+}

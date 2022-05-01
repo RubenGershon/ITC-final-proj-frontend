@@ -56,6 +56,19 @@ async function getUserData() {
   }
 }
 
+async function getAllUsers() {
+  try {
+    const response = await api.get("/user/all");
+    return response.data.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 async function updateUser(updatedDataObj) {
   try {
     const response = await api.put("/user", updatedDataObj);
@@ -196,6 +209,7 @@ export default {
   login,
   logout,
   getUserData,
+  getAllUsers,
   updateUser,
   addPet,
   getPetById,

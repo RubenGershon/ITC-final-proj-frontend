@@ -55,17 +55,21 @@ function PetsPage() {
   }
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <Button
-        variant="primary"
-        onClick={() => setDisplayMyPets(!displayMyPets)}
-      >
-        {displayMyPets
-          ? "Click to display Saved pets"
-          : "Click to display my pets"}
-      </Button>
-      {displayMyPets ? myPetsDisplay() : mySavedPetsDisplay()}
-    </div>
+    <>
+      {savedPets && caredPets && (
+        <div className="d-flex flex-column align-items-center">
+          <Button
+            variant="primary"
+            onClick={() => setDisplayMyPets(!displayMyPets)}
+          >
+            {displayMyPets
+              ? "Click to display Saved pets"
+              : "Click to display my pets"}
+          </Button>
+          {displayMyPets ? myPetsDisplay() : mySavedPetsDisplay()}
+        </div>
+      )}
+    </>
   );
 }
 

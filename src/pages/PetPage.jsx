@@ -58,6 +58,7 @@ function PetPage() {
   }
 
   function displayReturnOrAdoptAndFosterBtn() {
+    // Case where the pet belongs to the user
     if (user.caredPetsIds.find((id) => id === pet._id)) {
       return (
         <>
@@ -76,17 +77,20 @@ function PetPage() {
             Return {pet.name} to Adoption center...
           </Button>
           {pet.adoptionStatus === "adopted" && fosterBtn()}
-          {pet.adoptionStatus === "fostred" && adoptBtn()}
+          {pet.adoptionStatus === "fostered" && adoptBtn()}
         </>
       );
     } else {
-      return (
-        <>
-          {adoptBtn()}
-          <br />
-          {fosterBtn()}
-        </>
-      );
+      if (pet.adoptionStatus === "adopted") return "";
+      if (pet.adoptionStatus === "fostered") return <>{adoptBtn()}</>;
+      if (pet.adoptionStatus === "available")
+        return (
+          <>
+            {adoptBtn()}
+            <br />
+            {fosterBtn()}
+          </>
+        );
     }
   }
 
