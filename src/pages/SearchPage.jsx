@@ -3,13 +3,15 @@ import { Button } from "react-bootstrap";
 import "./SearchPage.css";
 import BasicSearch from "../components/BasicSearch";
 import AdvancedSearch from "../components/AdvancedSearch";
-import DisplayPets from "../components/DisplayPets";
-
+import DisplayResults from "../components/DisplayResults";
+import PetCard from "../components/PetCard";
+import { useNavigate } from "react-router-dom";
 
 function SearchPage(props) {
   const [displayBasic, setDisplayBasic] = useState(true);
   const [searchResults, setSearchResults] = useState("");
   const [serverErr, setServerErr] = useState("");
+  const navigate = useNavigate();
 
   return (
     <div id="searchPage">
@@ -42,7 +44,11 @@ function SearchPage(props) {
       </div>
       <div id="displayResults">
         {searchResults && searchResults.length !== 0 && (
-          <DisplayPets petsToDisplay={searchResults} />
+          <DisplayResults
+            elementsToDisplay={searchResults}
+            ChildComponent={PetCard}
+            action={(element) => navigate("/pet/" + element._id)}
+          />
         )}
       </div>
     </div>

@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
-import DisplayPets from "../components/DisplayPets";
+import DisplayResults from "../components/DisplayResults";
 import { Alert, Button } from "react-bootstrap";
 import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
+import PetCard from "../components/PetCard";
+import { useNavigate } from "react-router-dom";
 
 function PetsPage() {
   const { user } = useContext(UserContext);
   const [caredPets, setCaredPets] = useState("");
   const [savedPets, setSavedPets] = useState("");
   const [displayMyPets, setDisplayMyPets] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
@@ -29,12 +32,26 @@ function PetsPage() {
           You currently do not own or foster any pets
         </Alert>
       );
-    else return <DisplayPets petsToDisplay={caredPets} />;
+    else
+      return (
+        <DisplayResults
+          elementsToDisplay={caredPets}
+          ChildComponent={PetCard}
+          action={(element) => navigate("/pet/" + element._id)}
+        />
+      );
   }
 
   function mySavedPetsDisplay() {
     if (!savedPets) return <Alert variant="info">No saved pets</Alert>;
-    else return <DisplayPets petsToDisplay={savedPets} />;
+    else
+      return (
+        <DisplayResults
+          elementsToDisplay={savedPets}
+          ChildComponent={PetCard}
+          action={(element) => navigate("/pet/" + element._id)}
+        />
+      );
   }
 
   return (

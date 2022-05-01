@@ -142,8 +142,8 @@ function PetPage() {
             Adoption status: {pet.adoptionStatus} <br />
             Bio: {pet.bio} <br />
           </Card.Text>
-          {displayReturnOrAdoptAndFosterBtn()}
-          {saveOrUnsaveBtn()}
+          {user && pet && displayReturnOrAdoptAndFosterBtn()}
+          {user && pet && saveOrUnsaveBtn()}
         </Card.Body>
       </Card>
     );

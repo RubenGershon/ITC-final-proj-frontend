@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import WelcomePage from "./pages/WelcomePage";
 import PetsPage from "./pages/PetsPage";
 import PetPage from "./pages/PetPage";
+import AddPetPage from "./pages/AddPetPage";
 import SearchPage from "./pages/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { Route, Routes } from "react-router-dom";
@@ -26,6 +27,14 @@ function App() {
               element={
                 <AdminProtectedRoute>
                   <AdminPage />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/addPet"
+              element={
+                <AdminProtectedRoute>
+                  <AddPetPage />
                 </AdminProtectedRoute>
               }
             />

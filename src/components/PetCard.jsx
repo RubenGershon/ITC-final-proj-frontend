@@ -2,16 +2,15 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 
 //TODO: check if pet in the list - in case query via browser
-function PetCard({ petData, onSeeMore }) {
-  
+function PetCard({ data, actionBtn }) {
   return (
     <Card border="primary" style={{ width: "18rem" }}>
-      <Card.Img variant="top" src={petData.imageUrl} />
+      <Card.Img variant="top" src={data.imageUrl} />
       <Card.Body>
-        <Card.Title>{petData.name}</Card.Title>
-        <Card.Text>Adoption status: {petData.adoptionStatus}</Card.Text>
-        
-        <Button variant="primary" onClick={onSeeMore}>
+        <Card.Title>{data.name}</Card.Title>
+        <Card.Text>Adoption status: {data.adoptionStatus}</Card.Text>
+
+        <Button variant="primary" onClick={actionBtn}>
           SEE MORE
         </Button>
       </Card.Body>
