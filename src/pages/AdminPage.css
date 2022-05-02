@@ -6,9 +6,14 @@
 
 #actionBtns {
   flex-basis: 10%;
-  border: solid red;
+  border-bottom: solid;
+}
+
+.adminPageBtn {
+  margin-left: 2%;
 }
 
 #adminDisplayResults {
+  margin-top: 2%;
   flex-basis: 90%;
 }

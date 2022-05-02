@@ -27,7 +27,7 @@ function UserPage() {
           variant="primary"
           onClick={() => navigate(location.state.prevPath)}
         >
-          {location.state.btnText}
+          {location.state.prevBtnText}
         </Button>
         <Card border="primary" style={{ width: "25rem", margin: "auto" }}>
           <Card.Body>
@@ -43,7 +43,7 @@ function UserPage() {
         <PetsPage
           propUser={user}
           setActionBtns={false}
-          prevPath={window.location.href}
+          prevPath={window.location.pathname}
           prevBtnText={"<== Back to user page"}
         />
       </div>

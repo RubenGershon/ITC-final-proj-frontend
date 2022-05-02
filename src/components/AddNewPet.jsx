@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { Alert, Button, Col, Form, Row } from "react-bootstrap";
-import GenericValidationModal from "../components/GenericValidationModal";
+import GenericValidationModal from "./GenericValidationModal";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
 
-function AddPetPage() {
+function AddNewPet() {
   const [type, setType] = useState("dog");
   const [name, setName] = useState("");
   const [adoptionStatus, setAdoptionStatus] = useState("available");
@@ -184,4 +184,4 @@ function AddPetPage() {
   );
 }
 
-export default AddPetPage;
+export default AddNewPet;

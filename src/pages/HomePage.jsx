@@ -1,10 +1,19 @@
 import React, { useContext } from "react";
-import AuthContext from "../contexts/AuthContext";
-
+import Image from "react-bootstrap/Image";
+import "./HomePage.css";
 
 function HomePage() {
-  const { onLogin, activeUser } = useContext(AuthContext);
-  return <div>HOME PAGE</div>;
+  return (
+    <div id="homePage">
+      <div id="homePageBanner">
+        <Image
+          src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651527222/statics/cat4K_tgdxvi.jpg"
+          className="img-fluid shadow-4"
+          style={{ height: "100%", width: "100%" }}
+        />
+      </div>
+    </div>
+  );
 }
 
 export default HomePage;
