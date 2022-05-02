@@ -41,7 +41,14 @@ function AdminPage() {
           <DisplayResults
             elementsToDisplay={users}
             ChildComponent={UserCard}
-            action={() => {}}
+            action={(element) =>
+              navigate("/admin/user/" + element._id, {
+                state: {
+                  prevPath: window.location.pathname,
+                  btnText: "<== Back to admin page",
+                },
+              })
+            }
           />
         )}
       </div>

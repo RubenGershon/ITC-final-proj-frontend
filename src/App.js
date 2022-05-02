@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AuthProvider from "./components/AuthProvider";
 import UserProvider from "./components/UserProvider";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
@@ -27,6 +28,14 @@ function App() {
               element={
                 <AdminProtectedRoute>
                   <AdminPage />
+                </AdminProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/user/:id"
+              element={
+                <AdminProtectedRoute>
+                  <UserPage />
                 </AdminProtectedRoute>
               }
             />

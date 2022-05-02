@@ -3,7 +3,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 function DisplayResults({ elementsToDisplay, ChildComponent, action }) {
   return (
-    <Container>
+    <Container fluid>
       <Row>
         {elementsToDisplay.map((element) => (
           <Col md={3} key={element._id}>

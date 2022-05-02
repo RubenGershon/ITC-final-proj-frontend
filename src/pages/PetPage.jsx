@@ -1,10 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import server from "../services/server";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 function PetPage() {
+  const location = useLocation();
   const [pet, setPet] = useState("");
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
@@ -134,22 +135,34 @@ function PetPage() {
 
   function displayCard() {
     return (
-      <Card border="primary" style={{ width: "25rem", margin: "auto" }}>
-        <Card.Img variant="top" src={pet.imageUrl} />
-        <Card.Body>
-          <Card.Title>{pet.name}</Card.Title>
-          <Card.Text>
-            Type: {pet.type} <br />
-            Color: {pet.color} <br />
-            Weight: {pet.weight} <br />
-            Height: {pet.height} <br />
-            Adoption status: {pet.adoptionStatus} <br />
-            Bio: {pet.bio} <br />
-          </Card.Text>
-          {user && pet && displayReturnOrAdoptAndFosterBtn()}
-          {user && pet && saveOrUnsaveBtn()}
-        </Card.Body>
-      </Card>
+      <div id="petPgae">
+        <Button
+          className="m-1"
+          variant="primary"
+          onClick={() => navigate(location.state.prevPath)}
+        >
+          {location.state.prevBtnText}
+        </Button>
+        <Card border="primary" style={{ width: "25rem", margin: "auto" }}>
+          <Card.Img variant="top" src={pet.imageUrl} />
+          <Card.Body>
+            <Card.Title>{pet.name}</Card.Title>
+            <Card.Text>
+              Type: {pet.type} <br />
+              Color: {pet.color} <br />
+              Weight: {pet.weight} <br />
+              Height: {pet.height} <br />
+              Adoption status: {pet.adoptionStatus} <br />
+              Bio: {pet.bio} <br />
+            </Card.Text>
+            {location.state.setActionBtns &&
+              user &&
+              pet &&
+              displayReturnOrAdoptAndFosterBtn()}
+            {location.state.setActionBtns && user && pet && saveOrUnsaveBtn()}
+          </Card.Body>
+        </Card>
+      </div>
     );
   }
 
