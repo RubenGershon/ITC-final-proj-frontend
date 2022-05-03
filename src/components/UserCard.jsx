@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 
 //TODO: check if pet in the list - in case query via browser
-function UserCard({ data, actionBtn }) {
+function UserCard({ data, actionBtn, textBtn }) {
   return (
     <Card border="primary" style={{ width: "18rem" }} className=" my-3">
       <Card.Body>
@@ -10,7 +10,7 @@ function UserCard({ data, actionBtn }) {
         <Card.Text>email: {data.email}</Card.Text>
 
         <Button variant="primary" onClick={actionBtn}>
-          SEE MORE
+          {textBtn}
         </Button>
       </Card.Body>
     </Card>

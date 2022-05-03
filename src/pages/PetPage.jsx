@@ -15,7 +15,7 @@ function PetPage() {
       const response = await server.getPetById(
         window.location.href.split("/pet/")[1]
       );
-      setPet(response);
+      if (response.status === "ok") setPet(response.data);
     }
     loadData();
   }, []);
@@ -135,7 +135,7 @@ function PetPage() {
 
   function displayCard() {
     return (
-      <div id="petPgae">
+      <div id="petPage">
         <Button
           className="m-1"
           variant="primary"

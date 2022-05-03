@@ -125,7 +125,7 @@ async function addPet(petDataObj) {
 async function getPetById(petId) {
   try {
     const response = await api.get(`/pet/${petId}`);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       return error.response.data;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-function DisplayResults({ elementsToDisplay, ChildComponent, action }) {
+function DisplayResults({ elementsToDisplay, ChildComponent, action, textBtn = "See More" }) {
   return (
     <Container fluid>
       <Row>
@@ -11,6 +11,7 @@ function DisplayResults({ elementsToDisplay, ChildComponent, action }) {
               key={element._id}
               data={element}
               actionBtn={() => action(element)}
+              textBtn={textBtn}
             />
           </Col>
         ))}

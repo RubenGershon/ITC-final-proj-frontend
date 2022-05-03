@@ -7,7 +7,11 @@ import DisplayResults from "../components/DisplayResults";
 import PetCard from "../components/PetCard";
 import { useNavigate } from "react-router-dom";
 
-function SearchPage(props) {
+function SearchPage({
+  setActionBtns = true,
+  prevPath = window.location.pathname,
+  prevBtnText = "<== Back to search page",
+}) {
   const [displayBasic, setDisplayBasic] = useState(true);
   const [searchResults, setSearchResults] = useState("");
   const [serverErr, setServerErr] = useState("");
@@ -47,7 +51,15 @@ function SearchPage(props) {
           <DisplayResults
             elementsToDisplay={searchResults}
             ChildComponent={PetCard}
-            action={(element) => navigate("/pet/" + element._id)}
+            action={(element) =>
+              navigate("/pet/" + element._id, {
+                state: {
+                  setActionBtns: setActionBtns,
+                  prevPath: prevPath,
+                  prevBtnText: prevBtnText,
+                },
+              })
+            }
           />
         )}
       </div>
