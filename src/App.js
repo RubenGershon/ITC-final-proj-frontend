@@ -13,7 +13,6 @@ import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AuthProvider from "./components/AuthProvider";
 import UserProvider from "./components/UserProvider";
 import UserPage from "./pages/UserPage";
-import PetEditPage from "./pages/PetEditPage";
 
 function App() {
   return (
@@ -36,14 +35,6 @@ function App() {
               element={
                 <AdminProtectedRoute>
                   <UserPage />
-                </AdminProtectedRoute>
-              }
-            />
-            <Route
-              path="/admin/pet/edit/:id"
-              element={
-                <AdminProtectedRoute>
-                  <PetEditPage />
                 </AdminProtectedRoute>
               }
             />

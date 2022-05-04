@@ -5,7 +5,7 @@ import UserCard from "../components/UserCard";
 import PetCard from "../components/PetCard";
 import server from "../services/server";
 import "./AdminPage.css";
-import AddNewPet from "../components/AddNewPet";
+import PetForm from "../components/PetForm";
 
 import DisplayResults from "../components/DisplayResults";
 
@@ -13,8 +13,10 @@ function AdminPage() {
   const [seePets, setSeePets] = useState(false);
   const [pets, setPets] = useState(false);
   const [addNewPet, setAddNewPet] = useState(false);
+  const [editPet, setEditPet] = useState(false);
   const [users, setUsers] = useState("");
   const [seeUsers, setSeeUsers] = useState(false);
+  const [petToEdit, setPetToEdit] = useState("");
   const navigate = useNavigate();
 
   async function handleSeeUsers() {
@@ -39,25 +41,39 @@ function AdminPage() {
     setAddNewPet(false);
   }
 
-  function displayResultsWrapper(
-    elements,
-    childComponent,
-    targetPath,
-    textBtn
-  ) {
+  function displayPetForm(pet="") {
+    return <PetForm pet={pet} />;
+  }
+
+  function displayUserResultsWrapper() {
     return (
       <DisplayResults
-        elementsToDisplay={elements}
-        ChildComponent={childComponent}
-        action={(element) =>
-          navigate(targetPath + element._id, {
+        elementsToDisplay={users}
+        ChildComponent={UserCard}
+        action={(user) =>
+          navigate("/admin/user/" + user._id, {
             state: {
               prevPath: window.location.pathname,
               prevBtnText: "<== Back to admin page",
             },
           })
         }
-        textBtn={textBtn}
+        textBtn={"See More"}
+      />
+    );
+  }
+
+  function displayPetResultsWrapper() {
+    return (
+      <DisplayResults
+        elementsToDisplay={pets}
+        ChildComponent={PetCard}
+        action={(pet) => {
+          clearPage();
+          setPetToEdit(pet);
+          setEditPet(true);
+        }}
+        textBtn={"Edit"}
       />
     );
   }
@@ -84,7 +100,7 @@ function AdminPage() {
           size="lg"
           type="button"
           onClick={() => {
-            setSeeUsers(false);
+            clearPage();
             setAddNewPet(true);
           }}
         >
@@ -112,13 +128,10 @@ function AdminPage() {
         </Button>
       </div>
       <div id="adminDisplayResults">
-        {seeUsers &&
-          users &&
-          displayResultsWrapper(users, UserCard, "/admin/user/")}
-        {seePets &&
-          pets &&
-          displayResultsWrapper(pets, PetCard, "/admin/pet/edit/", "Edit")}
-        {addNewPet && <AddNewPet />}
+        {seeUsers && users && displayUserResultsWrapper()}
+        {seePets && pets && displayPetResultsWrapper()}
+        {addNewPet && displayPetForm()}
+        {editPet && displayPetForm(petToEdit)}
       </div>
     </div>
   );
