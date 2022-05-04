@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
 import GenericValidationModal from "./GenericValidationModal";
 import server from "../services/server";
-import { useNavigate } from "react-router-dom";
 
 function PetForm({ pet, cleanPage }) {
   const [name, setName] = useState("");
@@ -19,7 +18,6 @@ function PetForm({ pet, cleanPage }) {
   const [signUpErr, setSignUpErr] = useState("");
   const fileImgRef = useRef();
   const [showModal, setShowModal] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     setName(pet ? pet.name : "");

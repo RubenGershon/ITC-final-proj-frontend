@@ -39,11 +39,11 @@ function AdminPage() {
     setSeeUsers(false);
     setSeePets(false);
     setAddNewPet(false);
-    setEditPet(false)
+    setEditPet(false);
   }
 
-  function displayPetForm(pet="") {
-    return <PetForm pet={pet} cleanPage={ clearPage}/>;
+  function displayPetForm(pet = "") {
+    return <PetForm pet={pet} cleanPage={clearPage} />;
   }
 
   function displayUserResultsWrapper() {
@@ -75,8 +75,15 @@ function AdminPage() {
           setEditPet(true);
         }}
         textBtn={"Edit"}
+        action2={(pet) => {
+          deletePetWrapper(pet);
+        }}
       />
     );
+  }
+
+  function deletePetWrapper() {
+    console.log("Deleting...")
   }
 
   return (
