@@ -39,10 +39,11 @@ function AdminPage() {
     setSeeUsers(false);
     setSeePets(false);
     setAddNewPet(false);
+    setEditPet(false)
   }
 
   function displayPetForm(pet="") {
-    return <PetForm pet={pet} />;
+    return <PetForm pet={pet} cleanPage={ clearPage}/>;
   }
 
   function displayUserResultsWrapper() {

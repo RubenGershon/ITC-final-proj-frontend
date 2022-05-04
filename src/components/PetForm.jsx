@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Button, Col, Form, Row } from "react-bootstrap";
+import { Alert, Button, Card, Col, Form, Row } from "react-bootstrap";
 import GenericValidationModal from "./GenericValidationModal";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
 
-function PetForm({ pet }) {
+function PetForm({ pet, cleanPage }) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [adoptionStatus, setAdoptionStatus] = useState("");
@@ -18,7 +18,7 @@ function PetForm({ pet }) {
   const [hypoallergenic, setHypoallergenic] = useState("");
   const [signUpErr, setSignUpErr] = useState("");
   const fileImgRef = useRef();
-  const [toogleModal, setToogleModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,7 +72,7 @@ function PetForm({ pet }) {
       const response = await action(petObj, id);
       if (response.status === "ok") {
         if (fileImgRef) fileImgRef.current.value = null;
-        setToogleModal(true);
+        setShowModal(true);
       } else {
         setSignUpErr(response.message);
       }
@@ -111,9 +111,9 @@ function PetForm({ pet }) {
         ];
       else if (pet.type === "bird")
         array = [
+          { bird: "Bird" },
           { cat: "Cat" },
           { dog: "Dog" },
-          { bird: "Bird" },
           { rabbit: "Rabbit" },
         ];
       else if (pet.type === "rabbit")
@@ -292,15 +292,31 @@ function PetForm({ pet }) {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label>Upload a Picture of your Pet</Form.Label>
-        <Form.Control
-          type="file"
-          accept="image/*"
-          ref={fileImgRef}
-          onChange={(e) => setImageUrl(true)}
-        />
-      </Form.Group>
+      <div className="d-flex justify-content-between align-items-center">
+        {pet ? (
+          <Card border="primary" style={{ width: "50%" }} className=" my-3">
+            <Card.Img className="cardImg" variant="top" src={pet.imageUrl} />
+            <Card.Body>
+              <Card.Title>Current Picture for {pet.name}</Card.Title>
+            </Card.Body>
+          </Card>
+        ) : (
+          ""
+        )}
+        <Form.Group className="mb-3">
+          <Form.Label>
+            {pet
+              ? "Wish to change? Upload a new picture!"
+              : "Upload a Picture of your Pet"}
+          </Form.Label>
+          <Form.Control
+            type="file"
+            accept="image/*"
+            ref={fileImgRef}
+            onChange={(e) => setImageUrl(true)}
+          />
+        </Form.Group>
+      </div>
 
       <Form.Group className="mb-3">
         <Form.Label>Bio</Form.Label>
@@ -313,20 +329,20 @@ function PetForm({ pet }) {
         />
       </Form.Group>
       <Button variant="outline-primary" type="button" onClick={handleAddPet}>
-        Add Pet
+        {pet ? "Edit" : "Add Pet"}
       </Button>
       <br />
       <br />
       {signUpErr && <Alert variant="danger">{signUpErr}</Alert>}
-      {toogleModal && (
-        <GenericValidationModal
-          title={"Well done!"}
-          body={pet ? "Pet Edited Succesfully!" : "Pet Added Succesfully!"}
-          onClose={() => {
-            navigate("/admin");
-          }}
-        />
-      )}
+      <GenericValidationModal
+        show={showModal}
+        title={"Well done!"}
+        body={pet ? "Pet Edited Succesfully!" : "Pet Added Succesfully!"}
+        onClose={() => {
+          setShowModal(false);
+          cleanPage();
+        }}
+      />
     </Form>
   );
 }

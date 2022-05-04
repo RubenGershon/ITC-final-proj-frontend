@@ -1,14 +1,14 @@
 import { Button, Modal } from "react-bootstrap";
 
-function GenericValidationModal({ title, body, onClose }) {
+function GenericValidationModal({ title, body, onClose, show }) {
   return (
-    <Modal show={true}>
-      <Modal.Header>
-              <Modal.Title>{title}</Modal.Title>
+    <Modal show={show} onHide={onClose}>
+      <Modal.Header closeButton>
+        <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-              <p>{body}</p>
+        <p>{body}</p>
       </Modal.Body>
 
       <Modal.Footer>
