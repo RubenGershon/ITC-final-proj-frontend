@@ -4,7 +4,7 @@ import { Col, Container, Row } from "react-bootstrap";
 function DisplayResults({
   elementsToDisplay,
   ChildComponent,
-  action,
+  action = "",
   action2 = "",
   textBtn = "See More",
 }) {
@@ -16,7 +16,7 @@ function DisplayResults({
             <ChildComponent
               key={element._id}
               data={element}
-              actionBtn={() => action(element)}
+              actionBtn={action ? () => action(element) : ""}
               textBtn={textBtn}
               action2={action2}
             />
