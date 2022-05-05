@@ -43,7 +43,10 @@ function SearchPage({
             setServerErr={setServerErr}
           />
         ) : (
-          <AdvancedSearch />
+          <AdvancedSearch
+            setSearchResults={setSearchResults}
+            setServerErr={setServerErr}
+          />
         )}
       </div>
       <div id="displayResults">
