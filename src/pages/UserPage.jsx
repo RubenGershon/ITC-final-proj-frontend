@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import server from "../services/server";
 import { useLocation, useNavigate } from "react-router-dom";
-import PetsPage from "./PetsPage";
+import HomePage from "./HomePage";
 
 function UserPage() {
   const [user, setUser] = useState("");
@@ -40,7 +40,7 @@ function UserPage() {
             </Card.Text>
           </Card.Body>
         </Card>
-        <PetsPage
+        <HomePage
           propUser={user}
           setActionBtns={false}
           prevPath={window.location.pathname}

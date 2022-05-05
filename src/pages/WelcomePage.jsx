@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./WelcomePage.css";
 import server from "../services/server";
+import { useNavigate } from "react-router-dom";
 
 function WelcomePage() {
   const [pets, setPets] = useState("");
   const [randomPets, setRandomPets] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadPets() {
@@ -104,7 +106,9 @@ function WelcomePage() {
                 className="adminPageBtn"
                 variant="success"
                 type="button"
-                onClick={() => {}}
+                onClick={() => {
+                  navigate("/search");
+                }}
               >
                 SEARCH
               </Button>

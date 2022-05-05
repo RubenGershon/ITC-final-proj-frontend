@@ -3,7 +3,6 @@ import HomePage from "./pages/HomePage";
 import Profile from "./pages/Profile";
 import NavBar from "./components/NavBar";
 import WelcomePage from "./pages/WelcomePage";
-import PetsPage from "./pages/PetsPage";
 import PetPage from "./pages/PetPage";
 import SearchPage from "./pages/SearchPage";
 import NotFoundPage from "./pages/NotFoundPage";
@@ -46,22 +45,7 @@ function App() {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/pets"
-              element={
-                <ProtectedRoute>
-                  <PetsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/search"
-              element={
-                <ProtectedRoute>
-                  <SearchPage />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/search" element={<SearchPage />} />
             <Route
               path="/pet/:id"
               element={
