@@ -5,6 +5,7 @@ import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
 import PetCard from "../components/PetCard";
 import { useNavigate } from "react-router-dom";
+import "../CSS/HomePage.css"
 
 function HomePage({
   propUser = "",

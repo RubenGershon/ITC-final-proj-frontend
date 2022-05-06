@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import UserCard from "../components/UserCard";
 import PetCard from "../components/PetCard";
 import server from "../services/server";
-import "./AdminPage.css";
+import "../CSS/AdminPage.css";
 import PetForm from "../components/PetForm";
 
 import DisplayResults from "../components/DisplayResults";

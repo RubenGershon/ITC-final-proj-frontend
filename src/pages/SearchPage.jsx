@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import "./SearchPage.css";
+import "../CSS/SearchPage.css";
 import BasicSearch from "../components/BasicSearch";
 import AdvancedSearch from "../components/AdvancedSearch";
 import DisplayResults from "../components/DisplayResults";

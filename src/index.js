@@ -1,6 +1,6 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./index.css";
+import "./CSS/index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { createRoot } from "react-dom/client";

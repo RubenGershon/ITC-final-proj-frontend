@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Card } from "react-bootstrap";
-import "./WelcomePage.css";
+import "../CSS/WelcomePage.css";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
 
