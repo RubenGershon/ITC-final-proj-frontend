@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, Button, Card, Col, Container, Row } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
 import { useNavigate } from "react-router-dom";
 import "../CSS/HomePage.css";
+import DisplayPetsCards from "../components/DisplayPetsCards";
 
 function HomePage() {
   const { user } = useContext(UserContext);
@@ -24,45 +25,6 @@ function HomePage() {
     }
     loadData();
   }, []);
-
-  function displayPets(pets, message) {
-    if (pets.length === 0) return <Alert variant="info">{message}</Alert>;
-    else
-      return (
-        <Container fluid>
-          <Row>
-            {pets.map((pet) => (
-              <Col md={3} key={pet._id}>
-                <Card
-                  border="primary"
-                  style={{ width: "85%" }}
-                  className=" my-3"
-                >
-                  <Card.Img
-                    className="cardImg"
-                    variant="top"
-                    src={pet.imageUrl}
-                  />
-                  <Card.Body>
-                    <Card.Title>{pet.name}</Card.Title>
-                    <Card.Text>Adoption status: {pet.adoptionStatus}</Card.Text>
-
-                    <div className="d-flex justify-content-between">
-                      <Button
-                        variant="primary"
-                        onClick={() => navigate("/pet/" + pet._id)}
-                      >
-                        See More
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Container>
-      );
-  }
 
   return (
     <div id="homePage">
@@ -105,8 +67,12 @@ function HomePage() {
           </Button>
         </div>
         <div id="homePageDisplayPetsArea">
-          {caredPets && displayCaredPets && displayPets(caredPets)}
-          {savedPets && displaySavedPets && displayPets(savedPets)}
+          {caredPets && displayCaredPets && (
+            <DisplayPetsCards pets={caredPets} />
+          )}
+          {savedPets && displaySavedPets && (
+            <DisplayPetsCards pets={savedPets} />
+          )}
         </div>
       </div>
     </div>

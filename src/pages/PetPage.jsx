@@ -1,13 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Button, Card } from "react-bootstrap";
 import server from "../services/server";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 
 function PetPage() {
-  const location = useLocation();
-  const [pet, setPet] = useState("");
   const { user, setUser } = useContext(UserContext);
+  const [pet, setPet] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -148,11 +147,8 @@ function PetPage() {
               Adoption status: {pet.adoptionStatus} <br />
               Bio: {pet.bio} <br />
             </Card.Text>
-            {location.state.setActionBtns &&
-              user &&
-              pet &&
-              displayReturnOrAdoptAndFosterBtn()}
-            {location.state.setActionBtns && user && pet && saveOrUnsaveBtn()}
+            {user && pet && displayReturnOrAdoptAndFosterBtn()}
+            {user && pet && saveOrUnsaveBtn()}
           </Card.Body>
         </Card>
       </div>

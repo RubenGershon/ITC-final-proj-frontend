@@ -1,27 +1,21 @@
+import "../CSS/SearchPage.css";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import "../CSS/SearchPage.css";
 import BasicSearch from "../components/BasicSearch";
 import AdvancedSearch from "../components/AdvancedSearch";
-import DisplayResults from "../components/DisplayResults";
-import PetCard from "../components/PetCard";
-import { useNavigate } from "react-router-dom";
+import DisplayPetsCards from "../components/DisplayPetsCards";
 
-function SearchPage({
-  setActionBtns = true,
-  prevPath = window.location.pathname,
-  prevBtnText = "<== Back to search page",
-}) {
+function SearchPage() {
   const [displayBasic, setDisplayBasic] = useState(true);
   const [searchResults, setSearchResults] = useState("");
   const [serverErr, setServerErr] = useState("");
-  const navigate = useNavigate();
 
   return (
     <div id="searchPage">
-      <div id="searchBar">
+      <div id="searchPageBanner"></div>
+      <div id="searchPageBtns">
         <Button
-          variant="outline-success"
+          variant="outline-primary"
           size="lg"
           onClick={() => setDisplayBasic(true)}
         >
@@ -29,7 +23,7 @@ function SearchPage({
         </Button>
         &nbsp; &nbsp;
         <Button
-          variant="outline-success"
+          variant="outline-primary"
           size="lg"
           onClick={() => setDisplayBasic(false)}
         >
@@ -51,19 +45,7 @@ function SearchPage({
       </div>
       <div id="displayResults">
         {searchResults && searchResults.length !== 0 && (
-          <DisplayResults
-            elementsToDisplay={searchResults}
-            ChildComponent={PetCard}
-            action={(element) =>
-              navigate("/pet/" + element._id, {
-                state: {
-                  setActionBtns: setActionBtns,
-                  prevPath: prevPath,
-                  prevBtnText: prevBtnText,
-                },
-              })
-            }
-          />
+          <DisplayPetsCards pets={searchResults} />
         )}
       </div>
     </div>
