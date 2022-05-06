@@ -5,7 +5,7 @@ import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
 import PetCard from "../components/PetCard";
 import { useNavigate } from "react-router-dom";
-import "../CSS/HomePage.css"
+import "../CSS/HomePage.css";
 
 function HomePage({
   propUser = "",
@@ -16,7 +16,8 @@ function HomePage({
   const { user } = useContext(UserContext);
   const [caredPets, setCaredPets] = useState("");
   const [savedPets, setSavedPets] = useState("");
-  const [displayMyPets, setDisplayMyPets] = useState(true);
+  const [displayCaredPets, setDisplayCaredPets] = useState(true);
+  const [displaySavedPets, setDisplaySavedPets] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -56,29 +57,51 @@ function HomePage({
   }
 
   return (
-    <>
-      {savedPets && caredPets && (
-        <div className="d-flex flex-column align-items-center">
-          <Button
-            variant="primary"
-            onClick={() => setDisplayMyPets(!displayMyPets)}
-          >
-            {displayMyPets
-              ? "Click to display Saved pets"
-              : "Click to display my pets"}
-          </Button>
-          {displayMyPets
-            ? myPetsDisplay(
-                caredPets,
-                "You currently do not own or foster any pets"
-              )
-            : myPetsDisplay(
-                savedPets,
-                "You currently do not have pets in your saved pets list"
-              )}
+    <div id="homePage">
+      <div id="homePageBanner"></div>
+      <div id="homePageWelcomeCard">
+        <img
+          className="homePageWelcomeCardIcon"
+          src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651766277/PetAdoptionImages/toe-icon_nyzsmp.png"
+        />
+        <div className="homePageWelcomeCardTxt">
+          <div id="welcomeHomeTxt">Welcome Home</div>
+          <div id="welcomeHomeTxt">
+            {user.firstName + " " + user.lastName} !
+          </div>
         </div>
-      )}
-    </>
+      </div>
+      <div id="homePageDataArea">
+        <div id="homePageBtnsArea">
+          <Button
+            variant="outline-primary"
+            size="lg"
+            onClick={() => {
+              setDisplaySavedPets(false);
+              setDisplayCaredPets(true);
+            }}
+            active={displayCaredPets ? true : false}
+          >
+            Click to display my pets
+          </Button>
+          <Button
+            variant="outline-primary"
+            size="lg"
+            onClick={() => {
+              setDisplayCaredPets(false);
+              setDisplaySavedPets(true);
+            }}
+            active={displaySavedPets ? true : false}
+          >
+            Click to display Saved pets
+          </Button>
+        </div>
+        <div id="homePageDisplayPetsArea">
+          {caredPets && displayCaredPets && myPetsDisplay(caredPets)}
+          {savedPets && displaySavedPets && myPetsDisplay(savedPets)}
+        </div>
+      </div>
+    </div>
   );
 }
 
