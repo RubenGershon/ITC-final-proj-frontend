@@ -1,0 +1,7 @@
+#userPage {
+  height: 94.5%;
+  border: solid red;
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+}

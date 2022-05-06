@@ -1,18 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import DisplayResults from "../components/DisplayResults";
-import { Alert, Button } from "react-bootstrap";
+import { Alert, Button, Card, Col, Container, Row } from "react-bootstrap";
 import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
-import PetCard from "../components/PetCard";
 import { useNavigate } from "react-router-dom";
 import "../CSS/HomePage.css";
 
-function HomePage({
-  propUser = "",
-  setActionBtns = true,
-  prevPath = window.location.pathname,
-  prevBtnText = "<== Back to my pets page",
-}) {
+function HomePage() {
   const { user } = useContext(UserContext);
   const [caredPets, setCaredPets] = useState("");
   const [savedPets, setSavedPets] = useState("");
@@ -21,14 +14,10 @@ function HomePage({
   const navigate = useNavigate();
 
   useEffect(() => {
-    let userToUse;
-    if (propUser) userToUse = propUser;
-    else userToUse = user;
-
     async function loadData() {
       const responses = await Promise.all([
-        await server.getPetsByIds(userToUse.caredPetsIds),
-        await server.getPetsByIds(userToUse.savedPetsIds),
+        await server.getPetsByIds(user.caredPetsIds),
+        await server.getPetsByIds(user.savedPetsIds),
       ]);
       setCaredPets(responses[0]);
       setSavedPets(responses[1]);
@@ -36,23 +25,42 @@ function HomePage({
     loadData();
   }, []);
 
-  function myPetsDisplay(pets, message) {
+  function displayPets(pets, message) {
     if (pets.length === 0) return <Alert variant="info">{message}</Alert>;
     else
       return (
-        <DisplayResults
-          elementsToDisplay={pets}
-          ChildComponent={PetCard}
-          action={(element) =>
-            navigate("/pet/" + element._id, {
-              state: {
-                setActionBtns: setActionBtns,
-                prevPath: prevPath,
-                prevBtnText: prevBtnText,
-              },
-            })
-          }
-        />
+        <Container fluid>
+          <Row>
+            {pets.map((pet) => (
+              <Col md={3} key={pet._id}>
+                <Card
+                  border="primary"
+                  style={{ width: "85%" }}
+                  className=" my-3"
+                >
+                  <Card.Img
+                    className="cardImg"
+                    variant="top"
+                    src={pet.imageUrl}
+                  />
+                  <Card.Body>
+                    <Card.Title>{pet.name}</Card.Title>
+                    <Card.Text>Adoption status: {pet.adoptionStatus}</Card.Text>
+
+                    <div className="d-flex justify-content-between">
+                      <Button
+                        variant="primary"
+                        onClick={() => navigate("/pet/" + pet._id)}
+                      >
+                        See More
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </Container>
       );
   }
 
@@ -97,8 +105,8 @@ function HomePage({
           </Button>
         </div>
         <div id="homePageDisplayPetsArea">
-          {caredPets && displayCaredPets && myPetsDisplay(caredPets)}
-          {savedPets && displaySavedPets && myPetsDisplay(savedPets)}
+          {caredPets && displayCaredPets && displayPets(caredPets)}
+          {savedPets && displaySavedPets && displayPets(savedPets)}
         </div>
       </div>
     </div>

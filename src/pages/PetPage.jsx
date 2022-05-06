@@ -31,7 +31,7 @@ function PetPage() {
             await server.getUserData(),
           ]);
           setUser(responses[1]);
-          navigate("/pets");
+          navigate("/home");
         }}
       >
         Adopt {pet.name}
@@ -50,7 +50,7 @@ function PetPage() {
             await server.getUserData(),
           ]);
           setUser(responses[1]);
-          navigate("/pets");
+          navigate("/home");
         }}
       >
         Foster {pet.name}
@@ -72,7 +72,7 @@ function PetPage() {
                 await server.getUserData(),
               ]);
               setUser(responses[1]);
-              navigate("/pets");
+              navigate("/home");
             }}
           >
             Return {pet.name} to Adoption center...
@@ -107,7 +107,7 @@ function PetPage() {
               await server.getUserData(),
             ]);
             setUser(responses[1]);
-            navigate("/pets");
+            navigate("/home");
           }}
         >
           Unsave {pet.name} from your pet's list
@@ -124,7 +124,7 @@ function PetPage() {
               await server.getUserData(),
             ]);
             setUser(responses[1]);
-            navigate("/pets");
+            navigate("/home");
           }}
         >
           Save {pet.name} to your pet's list
@@ -136,13 +136,6 @@ function PetPage() {
   function displayCard() {
     return (
       <div id="petPage">
-        <Button
-          className="m-1"
-          variant="primary"
-          onClick={() => navigate(location.state.prevPath)}
-        >
-          {location.state.prevBtnText}
-        </Button>
         <Card border="primary" style={{ width: "25rem", margin: "auto" }}>
           <Card.Img variant="top" src={pet.imageUrl} />
           <Card.Body>

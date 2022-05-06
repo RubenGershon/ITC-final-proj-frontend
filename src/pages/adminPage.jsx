@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserCard from "../components/UserCard";
-import PetCard from "../components/PetCard";
 import server from "../services/server";
 import "../CSS/AdminPage.css";
 import PetForm from "../components/PetForm";
-
-import DisplayResults from "../components/DisplayResults";
 
 function AdminPage() {
   const [seePets, setSeePets] = useState(false);
@@ -46,44 +42,83 @@ function AdminPage() {
     return <PetForm pet={pet} cleanPage={clearPage} />;
   }
 
-  function displayUserResultsWrapper() {
+  function displayUserResults() {
     return (
-      <DisplayResults
-        elementsToDisplay={users}
-        ChildComponent={UserCard}
-        action={(user) =>
-          navigate("/admin/user/" + user._id, {
-            state: {
-              prevPath: window.location.pathname,
-              prevBtnText: "<== Back to admin page",
-            },
-          })
-        }
-        textBtn={"See More"}
-      />
+      <Container fluid>
+        <Row>
+          {users.map((user) => (
+            <Col md={3} key={user._id}>
+              <Card border="primary" style={{ width: "85%" }} className=" my-3">
+                <Card.Body>
+                  <Card.Title>
+                    {user.firstName + " " + user.lastName}
+                  </Card.Title>
+                  <Card.Text>email: {user.email}</Card.Text>
+                  <Button
+                    variant="outline-primary"
+                    onClick={(pet) =>
+                      navigate("/admin/user/" + user._id, {
+                        state: {
+                          prevPath: window.location.pathname,
+                          prevBtnText: "<== Back to admin page",
+                        },
+                      })
+                    }
+                  >
+                    See More
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     );
   }
 
-  function displayPetResultsWrapper() {
+  function displayPetResults() {
     return (
-      <DisplayResults
-        elementsToDisplay={pets}
-        ChildComponent={PetCard}
-        action={(pet) => {
-          clearPage();
-          setPetToEdit(pet);
-          setEditPet(true);
-        }}
-        textBtn={"Edit"}
-        action2={(pet) => {
-          deletePetWrapper(pet);
-        }}
-      />
+      <Container fluid>
+        <Row>
+          {pets.map((pet) => (
+            <Col md={3} key={pet._id}>
+              <Card border="primary" style={{ width: "85%" }} className=" my-3">
+                <Card.Img
+                  className="cardImg"
+                  variant="top"
+                  src={pet.imageUrl}
+                />
+                <Card.Body>
+                  <Card.Title>{pet.name}</Card.Title>
+                  <div className="d-flex">
+                    <Button
+                      variant="outline-primary"
+                      onClick={(pet) => {
+                        clearPage();
+                        setPetToEdit(pet);
+                        setEditPet(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="outline-danger"
+                      onClick={(pet) => deletePetWrapper(pet)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
+      </Container>
     );
   }
 
   function deletePetWrapper() {
-    console.log("Deleting...")
+    console.log("Deleting...");
   }
 
   return (
@@ -135,9 +170,10 @@ function AdminPage() {
           See all Pets
         </Button>
       </div>
+
       <div id="adminDisplayResults">
-        {seeUsers && users && displayUserResultsWrapper()}
-        {seePets && pets && displayPetResultsWrapper()}
+        {seeUsers && users && displayUserResults()}
+        {seePets && pets && displayPetResults()}
         {addNewPet && displayPetForm()}
         {editPet && displayPetForm(petToEdit)}
       </div>
