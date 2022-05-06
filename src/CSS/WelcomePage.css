@@ -6,49 +6,58 @@
   width: 100%;
 }
 
-#welcomeTxt {
-  width: 100%;
-  margin-top: 2%;
-  margin-left: 30%;
-  font-size: 40px;
-  font-weight: bold;
-  color: white;
-}
-
-#welcomeArea {
-  flex-basis: 35%;
+#bannerArea {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-basis: 45%;
   width: 100%;
   background-image: url("https://res.cloudinary.com/dr6horuoy/image/upload/v1651767337/PetAdoptionImages/animals_psegcv.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border-bottom: solid black;
+}
+
+#welcomeTxt {
+  width: 100%;
+  margin-top: 2%;
+  margin-left: 30%;
+  font-size: 45px;
+  font-weight: bold;
+  color: white;
 }
 
 #petsIcons {
-  display: flex;
-  justify-content: space-around;
-  z-index: 1000;
-  position: absolute;
   width: 100%;
-  margin-top: 13%;
-}
-
-.cardImg {
-  height: 6vw;
-  object-fit: cover;
+  margin-top: 16%;
+  height: 21%;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
 }
 
 .petIconCard {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   width: 10%;
-  height: 12vw;
-  margin-right: 2%;
+  margin-right: 4%;
+  font-weight: bold;
   background-color: white;
   border: solid black;
+}
+
+.petIconImg {
+  max-width: 100%;
+  max-height: auto;
+}
+
+
+.cardImg {
+  height: 6vw;
+  object-fit: cover;
 }
 
 #dataArea {

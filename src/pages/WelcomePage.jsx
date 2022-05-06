@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button, Card, Image } from "react-bootstrap";
 import "../CSS/WelcomePage.css";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
@@ -48,46 +48,42 @@ function WelcomePage() {
 
   return (
     <div id="welcomePage">
-      <div id="welcomeArea">
+      <div id="bannerArea">
         <div id="welcomeTxt">Find your New Best Friend!</div>
       </div>
 
       <div id="petsIcons">
-        <Card className="petIconCard">
-          <Card.Img
-            className="cardImg"
-            variant="top"
+        <div className="petIconCard">
+          <img
+            className="petIconImg"
             src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651765683/PetAdoptionImages/doc-icon_am3lwa.jpg"
           />
-          <Card.Title>Dogs</Card.Title>
-        </Card>
+          <div className="petIconName">Dogs</div>
+        </div>
 
-        <Card className="petIconCard">
-          <Card.Img
-            className="cardImg"
-            variant="top"
+        <div className="petIconCard">
+          <img
+            className="petIconImg"
             src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651765805/PetAdoptionImages/cat-icon_syidhn.jpg"
           />
-          <Card.Title>Cats</Card.Title>
-        </Card>
+          <div className="petIconName">Cats</div>
+        </div>
 
-        <Card className="petIconCard">
-          <Card.Img
-            className="cardImg"
-            variant="top"
+        <div className="petIconCard">
+          <img
+            className="petIconImg"
             src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651765958/PetAdoptionImages/bird-icon_utohog.png"
           />
-          <Card.Title>Birds</Card.Title>
-        </Card>
+          <div className="petIconName">Birds</div>
+        </div>
 
-        <Card className="petIconCard">
-          <Card.Img
-            className="cardImg"
-            variant="top"
+        <div className="petIconCard">
+          <img
+            className="petIconImg"
             src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651766277/PetAdoptionImages/toe-icon_nyzsmp.png"
           />
-          <Card.Title>Many Others!</Card.Title>
-        </Card>
+          <div className="petIconName">Many Others!</div>
+        </div>
       </div>
 
       <div id="dataArea">
