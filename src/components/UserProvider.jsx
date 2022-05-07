@@ -1,14 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import server from "../services/server";
+import AuthContext from "../contexts/AuthContext";
 import UserContext from "../contexts/UserContext";
 
 function UserProvider({ children }) {
   const [user, setUser] = useState("");
+  const { onLogout } = useContext(AuthContext);
 
   useEffect(() => {
     async function loadData() {
       const response = await server.getUserData();
-      setUser(response);
+      if (response.status === "ok") setUser(response.data);
+      else onLogout();
     }
     loadData();
   }, []);
@@ -16,7 +19,7 @@ function UserProvider({ children }) {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       {console.log("PING USER-PROVIDER: ", user)}
-      {user && children}
+      {children}
     </UserContext.Provider>
   );
 }

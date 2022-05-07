@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import UserContext from "../contexts/UserContext";
 import server from "../services/server.js";
-import { useNavigate } from "react-router-dom";
 import "../CSS/HomePage.css";
 import DisplayPetsCards from "../components/DisplayPetsCards";
 
@@ -12,7 +11,6 @@ function HomePage() {
   const [savedPets, setSavedPets] = useState("");
   const [displayCaredPets, setDisplayCaredPets] = useState(true);
   const [displaySavedPets, setDisplaySavedPets] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadData() {
@@ -20,8 +18,8 @@ function HomePage() {
         await server.getPetsByIds(user.caredPetsIds),
         await server.getPetsByIds(user.savedPetsIds),
       ]);
-      setCaredPets(responses[0]);
-      setSavedPets(responses[1]);
+      setCaredPets(responses[0].data);
+      setSavedPets(responses[1].data);
     }
     loadData();
   }, []);

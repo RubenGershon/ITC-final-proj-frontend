@@ -46,7 +46,7 @@ async function logout(signUpDataObj) {
 async function getUserData() {
   try {
     const response = await api.get("/user");
-    return response.data.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       return error.response.data;
@@ -170,7 +170,7 @@ async function getPetsByIds(listOfPetsIds) {
     const response = await api.get("/pet/byIDs", {
       params: { listOfPetsIds: JSON.stringify(listOfPetsIds) },
     });
-    return response.data.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       return error.response.data;
