@@ -2,16 +2,13 @@ import React, { useState } from "react";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import server from "../services/server";
-import "../CSS/AdminPage.css";
 import PetForm from "../components/PetForm";
 
+
 function AdminPage() {
-  const [seePets, setSeePets] = useState(false);
   const [pets, setPets] = useState(false);
   const [addNewPet, setAddNewPet] = useState(false);
-  const [editPet, setEditPet] = useState(false);
   const [users, setUsers] = useState("");
-  const [seeUsers, setSeeUsers] = useState(false);
   const [petToEdit, setPetToEdit] = useState("");
   const navigate = useNavigate();
 
@@ -19,7 +16,6 @@ function AdminPage() {
     clearPage();
     const response = await server.getAllUsers();
     setUsers(response);
-    setSeeUsers(true);
   }
 
   async function handleSeePets() {
@@ -27,36 +23,40 @@ function AdminPage() {
     const response = await server.getPetsByQuery({});
     if (response.status === "ok") {
       setPets(response.data);
-      setSeePets(true);
     }
   }
 
   function clearPage() {
-    setSeeUsers(false);
-    setSeePets(false);
+    setUsers("")
+    setPets("")
     setAddNewPet(false);
-    setEditPet(false);
+    setPetToEdit("");
   }
 
   function displayPetForm(pet = "") {
     return <PetForm pet={pet} cleanPage={clearPage} />;
   }
 
-  function displayUserResults() {
+  function displayUsers() {
     return (
       <Container fluid>
         <Row>
           {users.map((user) => (
             <Col md={3} key={user._id}>
-              <Card border="primary" style={{ width: "85%" }} className=" my-3">
+              <Card
+                border="primary"
+                style={{ width: "18rem" }}
+                className=" my-3"
+              >
                 <Card.Body>
                   <Card.Title>
                     {user.firstName + " " + user.lastName}
                   </Card.Title>
                   <Card.Text>email: {user.email}</Card.Text>
+
                   <Button
-                    variant="outline-primary"
-                    onClick={(pet) =>
+                    variant="primary"
+                    onClick={() =>
                       navigate("/admin/user/" + user._id, {
                         state: {
                           prevPath: window.location.pathname,
@@ -76,7 +76,7 @@ function AdminPage() {
     );
   }
 
-  function displayPetResults() {
+  function displayPets() {
     return (
       <Container fluid>
         <Row>
@@ -90,20 +90,23 @@ function AdminPage() {
                 />
                 <Card.Body>
                   <Card.Title>{pet.name}</Card.Title>
-                  <div className="d-flex">
+
+                  <div className="d-flex justify-content-between">
                     <Button
-                      variant="outline-primary"
-                      onClick={(pet) => {
+                      variant="primary"
+                      onClick={() => {
                         clearPage();
                         setPetToEdit(pet);
-                        setEditPet(true);
                       }}
                     >
                       Edit
                     </Button>
+
                     <Button
-                      variant="outline-danger"
-                      onClick={(pet) => deletePetWrapper(pet)}
+                      variant="danger"
+                      onClick={() => {
+                        deletePetWrapper(pet);
+                      }}
                     >
                       Delete
                     </Button>
@@ -170,12 +173,11 @@ function AdminPage() {
           See all Pets
         </Button>
       </div>
-
       <div id="adminDisplayResults">
-        {seeUsers && users && displayUserResults()}
-        {seePets && pets && displayPetResults()}
+        {users && displayUsers()}
+        {pets && displayPets()}
         {addNewPet && displayPetForm()}
-        {editPet && displayPetForm(petToEdit)}
+        {petToEdit && displayPetForm(petToEdit)}
       </div>
     </div>
   );

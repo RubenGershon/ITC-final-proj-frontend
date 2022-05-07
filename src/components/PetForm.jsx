@@ -15,7 +15,7 @@ function PetForm({ pet, cleanPage }) {
   const [imageUrl, setImageUrl] = useState("");
   const [dietaryRestrictions, setDietaryRestrictions] = useState("");
   const [hypoallergenic, setHypoallergenic] = useState("");
-  const [signUpErr, setSignUpErr] = useState("");
+  const [err, setErr] = useState("");
   const fileImgRef = useRef();
   const [showModal, setShowModal] = useState(false);
 
@@ -30,7 +30,7 @@ function PetForm({ pet, cleanPage }) {
     setBio(pet ? pet.bio : "");
     setDietaryRestrictions(pet ? pet.dietaryRestrictions : "None");
     setHypoallergenic(pet ? pet.hypoallergenic : "false");
-  }, []);
+  }, [pet]);
 
   async function handleAddPet() {
     if (
@@ -44,7 +44,7 @@ function PetForm({ pet, cleanPage }) {
       !bio ||
       (!pet && !imageUrl)
     ) {
-      setSignUpErr("Missing information - all fields must be filled.");
+      setErr("Missing information - all fields must be filled.");
       return;
     }
     const petObj = {
@@ -66,17 +66,12 @@ function PetForm({ pet, cleanPage }) {
 
   async function addOrEditPet(action, petObj) {
     const id = pet ? pet._id : "";
-    try {
-      const response = await action(petObj, id);
-      if (response.status === "ok") {
-        if (fileImgRef) fileImgRef.current.value = null;
-        setShowModal(true);
-      } else {
-        setSignUpErr(response.message);
-      }
-    } catch (err) {
-      if (err.response) setSignUpErr(err.response.data.message);
-      else setSignUpErr(err);
+    const response = await action(petObj, id);
+    if (response.status === "ok") {
+      if (fileImgRef) fileImgRef.current.value = null;
+      setShowModal(true);
+    } else {
+      setErr("Pet's name must be unique");
     }
   }
 
@@ -331,7 +326,7 @@ function PetForm({ pet, cleanPage }) {
       </Button>
       <br />
       <br />
-      {signUpErr && <Alert variant="danger">{signUpErr}</Alert>}
+      {err && <Alert variant="danger">{err}</Alert>}
       <GenericValidationModal
         show={showModal}
         title={"Well done!"}
