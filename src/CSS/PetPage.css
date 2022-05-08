@@ -1,0 +1,16 @@
+#petPage {
+  height: 94.5%;
+  background-image: url("https://res.cloudinary.com/dr6horuoy/image/upload/v1651833082/PetAdoptionImages/banner_ktuurr.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+#petPageCentralCard {
+  position: absolute;
+  margin-left: 35%;
+  margin-top: 10%;
+  width: 30rem;
+  box-shadow: 10px 10px 5px lightblue;
+}

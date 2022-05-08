@@ -36,8 +36,9 @@ function WelcomePage() {
       <Card
         key={i}
         border="primary"
-        style={{ width: "15%" }}
+        style={{ width: "15%", boxShadow: "10px 10px 5px lightblue" }}
         className="randomPetCard"
+        onClick={() => navigate(`/pet/${pet._id}`)}
       >
         <Card.Img className="cardImg" variant="top" src={pet.imageUrl} />
         <Card.Body>{pet.name}</Card.Body>
@@ -52,45 +53,11 @@ function WelcomePage() {
         <div id="welcomeTxt">Find your New Best Friend!</div>
       </div>
 
-      <div id="petsIcons">
-        <div className="petIconCard">
-          <img
-            className="petIconImg"
-            src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651765683/PetAdoptionImages/doc-icon_am3lwa.jpg"
-          />
-          <div className="petIconName">Dogs</div>
-        </div>
-
-        <div className="petIconCard">
-          <img
-            className="petIconImg"
-            src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651765805/PetAdoptionImages/cat-icon_syidhn.jpg"
-          />
-          <div className="petIconName">Cats</div>
-        </div>
-
-        <div className="petIconCard">
-          <img
-            className="petIconImg"
-            src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651765958/PetAdoptionImages/bird-icon_utohog.png"
-          />
-          <div className="petIconName">Birds</div>
-        </div>
-
-        <div className="petIconCard">
-          <img
-            className="petIconImg"
-            src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651766277/PetAdoptionImages/toe-icon_nyzsmp.png"
-          />
-          <div className="petIconName">Many Others!</div>
-        </div>
-      </div>
-
       <div id="dataArea">
         <div id="dataTxt"> Pets Available for Adoption</div>
         <div id="dataShow">
           {randomPets && displayRandomPets()}
-          <Card id="searchCard" border="primary" style={{ width: "15%" }}>
+          <Card id="searchCard" border="primary" style={{ width: "15%", boxShadow: "10px 10px 5px lightblue"}}>
             <Card.Img
               className="cardImg"
               variant="top"

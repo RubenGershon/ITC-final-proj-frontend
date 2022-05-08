@@ -5,11 +5,12 @@ import UserContext from "../contexts/UserContext";
 
 function UserProvider({ children }) {
   const [user, setUser] = useState("");
-  const {activeUser, onLogout } = useContext(AuthContext);
+  const { activeUser, onLogout } = useContext(AuthContext);
 
   useEffect(() => {
     async function loadData() {
       const response = await server.getUserData();
+
       if (response.status === "ok") setUser(response.data);
       else onLogout();
     }

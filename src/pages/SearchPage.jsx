@@ -43,7 +43,7 @@ function SearchPage() {
           />
         )}
       </div>
-      <div id="displayResults">
+      <div id="searchDisplayResults">
         {searchResults && searchResults.length !== 0 && (
           <DisplayPetsCards pets={searchResults} />
         )}

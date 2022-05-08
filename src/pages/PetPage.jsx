@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Alert, Button, Card } from "react-bootstrap";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
+import "../CSS/PetPage.css";
 
 function PetPage() {
   const { user, setUser } = useContext(UserContext);
@@ -135,27 +136,34 @@ function PetPage() {
   function displayCard() {
     return (
       <div id="petPage">
-        <Card border="primary" style={{ width: "25rem", margin: "auto" }}>
-          <Card.Img variant="top" src={pet.imageUrl} />
+        <Card id="petPageCentralCard" border="primary">
+          <Card.Img src={pet.imageUrl} />
           <Card.Body>
-            <Card.Title>{pet.name}</Card.Title>
+            <Card.Title>
+              <b>{pet.name}</b>
+            </Card.Title>
             <Card.Text>
-              Type: {pet.type} <br />
-              Color: {pet.color} <br />
-              Weight: {pet.weight} <br />
-              Height: {pet.height} <br />
-              Adoption status: {pet.adoptionStatus} <br />
-              Bio: {pet.bio} <br />
+              <b>Type: </b> {pet.type} <br />
+              <b>Color :</b> {pet.color} <br />
+              <b>Weight :</b> {pet.weight} <br />
+              <b>Height: </b> {pet.height} <br />
+              <b>Adoption status:</b> {pet.adoptionStatus} <br />
+              <b>Bio: </b> {pet.bio} <br />
             </Card.Text>
             {user && pet && displayReturnOrAdoptAndFosterBtn()}
             {user && pet && saveOrUnsaveBtn()}
+            {!user && (
+              <Alert>
+                In order to Adopt or Foster {pet.name} you need to Login!
+              </Alert>
+            )}
           </Card.Body>
         </Card>
       </div>
     );
   }
 
-  return <>{pet && user && displayCard()}</>;
+  return <>{pet && displayCard()}</>;
 }
 
 export default PetPage;

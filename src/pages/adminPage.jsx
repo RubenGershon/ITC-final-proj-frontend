@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import server from "../services/server";
 import PetForm from "../components/PetForm";
 import GenericValidationModal from "../components/GenericValidationModal";
-import "../CSS/AdminPage.css"
+import "../CSS/AdminPage.css";
 
 function AdminPage() {
   const [pets, setPets] = useState(false);
@@ -48,7 +48,7 @@ function AdminPage() {
             <Col md={3} key={user._id}>
               <Card
                 border="primary"
-                style={{ width: "18rem" }}
+                style={{ width: "18rem", boxShadow: "10px 10px 5px lightblue" }}
                 className=" my-3"
               >
                 <Card.Body>
@@ -85,7 +85,11 @@ function AdminPage() {
         <Row>
           {pets.map((pet) => (
             <Col md={3} key={pet._id}>
-              <Card border="primary" style={{ width: "85%" }} className=" my-3">
+              <Card
+                border="primary"
+                style={{ width: "85%", boxShadow: "10px 10px 5px lightblue" }}
+                className=" my-3"
+              >
                 <Card.Img
                   className="cardImg"
                   variant="top"

@@ -11,9 +11,8 @@ function BasicSearch({ setSearchResults, setServerErr }) {
     else setServerErr(response.message);
   }
 
-
   return (
-    <Form style={{ width: "50%", margin: "auto" }}>
+    <Form style={{ width: "40%", margin: "auto" }}>
       <br />
       <Form.Group>
         <Form.Label>Pet Type</Form.Label>
@@ -25,7 +24,12 @@ function BasicSearch({ setSearchResults, setServerErr }) {
         </Form.Select>
       </Form.Group>
 
-      <Button variant="primary" type="button" onClick={handleSearch}>
+      <Button
+        variant="primary"
+        type="button"
+        style={{ marginTop: "5%" }}
+        onClick={handleSearch}
+      >
         Search
       </Button>
     </Form>

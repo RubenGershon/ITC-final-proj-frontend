@@ -8,7 +8,11 @@ function DisplayPetsCards({ pets }) {
       <Row>
         {pets.map((pet) => (
           <Col md={3} key={pet._id}>
-            <Card border="primary" style={{ width: "85%" }} className=" my-3">
+            <Card
+              border="primary"
+              style={{ width: "85%", boxShadow: "10px 10px 5px lightblue" }}
+              className=" my-3"
+            >
               <Card.Img className="cardImg" variant="top" src={pet.imageUrl} />
               <Card.Body>
                 <Card.Title>{pet.name}</Card.Title>

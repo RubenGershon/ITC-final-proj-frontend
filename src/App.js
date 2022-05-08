@@ -46,14 +46,7 @@ function App() {
               }
             />
             <Route path="/search" element={<SearchPage />} />
-            <Route
-              path="/pet/:id"
-              element={
-                <ProtectedRoute>
-                  <PetPage />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/pet/:id" element={<PetPage />} />
             <Route
               path="/profile"
               element={
