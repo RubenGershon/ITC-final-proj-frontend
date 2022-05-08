@@ -2,12 +2,13 @@ import React, { useEffect, useState, useContext } from "react";
 import { Alert, Button, Card } from "react-bootstrap";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
+import AuthContext from "../contexts/AuthContext";
 import "../CSS/PetPage.css";
 
 function PetPage() {
-  const { user, setUser } = useContext(UserContext);
+  const { activeUser, setActiveUser } = useContext(AuthContext);
   const [pet, setPet] = useState("");
+  const [petPageErr, setPetpageErr] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,12 +27,13 @@ function PetPage() {
         className="m-1"
         variant="primary"
         onClick={async () => {
-          const responses = await Promise.all([
-            await server.adoptPet(pet._id, { adoptionStatus: "adopted" }),
-            await server.getUserData(),
-          ]);
-          setUser(responses[1]);
-          navigate("/home");
+          const adoptResponse = await server.adoptPet(pet._id, {
+            adoptionStatus: "adopted",
+          });
+          if (adoptResponse.status === "ok") {
+            const userResponse = await server.getUserData();
+            setActiveUser(userResponse.data);
+          } else setPetpageErr(adoptResponse.message);
         }}
       >
         Adopt {pet.name}
@@ -45,12 +47,13 @@ function PetPage() {
         className="m-1"
         variant="primary"
         onClick={async () => {
-          const responses = await Promise.all([
-            await server.adoptPet(pet._id, { adoptionStatus: "fostered" }),
-            await server.getUserData(),
-          ]);
-          setUser(responses[1]);
-          navigate("/home");
+          const fosterResponse = await server.adoptPet(pet._id, {
+            adoptionStatus: "fostered",
+          });
+          if (fosterResponse.status === "ok") {
+            const userResponse = await server.getUserData();
+            setActiveUser(userResponse.data);
+          } else setPetpageErr(fosterResponse.message);
         }}
       >
         Foster {pet.name}
@@ -60,19 +63,18 @@ function PetPage() {
 
   function displayReturnOrAdoptAndFosterBtn() {
     // Case where the pet belongs to the user
-    if (user.caredPetsIds.find((id) => id === pet._id)) {
+    if (activeUser.caredPetsIds.find((id) => id === pet._id)) {
       return (
         <>
           <Button
             className="m-1"
             variant="primary"
             onClick={async () => {
-              const responses = await Promise.all([
-                await server.returnPet(pet._id),
-                await server.getUserData(),
-              ]);
-              setUser(responses[1]);
-              navigate("/home");
+              const returnResponse = await server.returnPet(pet._id);
+              if (returnResponse.status === "ok") {
+                const userResponse = await server.getUserData();
+                setActiveUser(userResponse.data);
+              } else setPetpageErr(returnResponse.message);
             }}
           >
             Return {pet.name} to Adoption center...
@@ -96,18 +98,17 @@ function PetPage() {
   }
 
   function saveOrUnsaveBtn() {
-    if (user.savedPetsIds.find((id) => id === pet._id)) {
+    if (activeUser.savedPetsIds.find((id) => id === pet._id)) {
       return (
         <Button
           className="m-1"
           variant="primary"
           onClick={async () => {
-            const responses = await Promise.all([
-              await server.unsavePet(pet._id),
-              await server.getUserData(),
-            ]);
-            setUser(responses[1]);
-            navigate("/home");
+            const unsaveResponse = await server.unsavePet(pet._id);
+            if (unsaveResponse.status === "ok") {
+              const userResponse = await server.getUserData();
+              setActiveUser(userResponse.data);
+            } else setPetpageErr(unsaveResponse.message);
           }}
         >
           Unsave {pet.name} from your pet's list
@@ -119,12 +120,11 @@ function PetPage() {
           className="m-1"
           variant="primary"
           onClick={async () => {
-            const responses = await Promise.all([
-              await server.savePet(pet._id),
-              await server.getUserData(),
-            ]);
-            setUser(responses[1]);
-            navigate("/home");
+            const saveResponse = await server.savePet(pet._id);
+            if (saveResponse.status === "ok") {
+              const userResponse = await server.getUserData();
+              setActiveUser(userResponse.data);
+            } else setPetpageErr(saveResponse.message);
           }}
         >
           Save {pet.name} to your pet's list
@@ -150,9 +150,9 @@ function PetPage() {
               <b>Adoption status:</b> {pet.adoptionStatus} <br />
               <b>Bio: </b> {pet.bio} <br />
             </Card.Text>
-            {user && pet && displayReturnOrAdoptAndFosterBtn()}
-            {user && pet && saveOrUnsaveBtn()}
-            {!user && (
+            {activeUser && pet && displayReturnOrAdoptAndFosterBtn()}
+            {activeUser && pet && saveOrUnsaveBtn()}
+            {!activeUser && (
               <Alert>
                 In order to Adopt or Foster {pet.name} you need to Login!
               </Alert>

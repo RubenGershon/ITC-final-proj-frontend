@@ -1,18 +1,16 @@
 import React, { useContext, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
 import AuthContext from "../contexts/AuthContext";
 import server from "../services/server";
 
 function Profile() {
-  const { user } = useContext(UserContext);
-  const { onLogout } = useContext(AuthContext);
-  const [firstName, setFirstName] = useState(user.firstName);
-  const [lastName, setLastName] = useState(user.lastName);
-  const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
-  const [email, setEmail] = useState(user.email);
-  const [bio, setBio] = useState(user.bio);
+  const { activeUser, setActiveUser, onLogout } = useContext(AuthContext);
+  const [firstName, setFirstName] = useState(activeUser.firstName);
+  const [lastName, setLastName] = useState(activeUser.lastName);
+  const [phoneNumber, setPhoneNumber] = useState(activeUser.phoneNumber);
+  const [email, setEmail] = useState(activeUser.email);
+  const [bio, setBio] = useState(activeUser.bio);
   const [password, setPwd] = useState("");
   const [passwordConf, setPwdConf] = useState("");
   const [pwdConfErr, setPwdConfErr] = useState("");
@@ -24,9 +22,11 @@ function Profile() {
   async function handleUpdate() {
     const response = await server.updateUser(updates);
     if (response.status === "ok") {
-      if (user.email === email) navigate("/home");
-      else {
-        server.logout();
+      const updatedUser = await server.getUserData();
+      if (activeUser.email === email) {
+        setActiveUser(updatedUser.data);
+        navigate("/home");
+      } else {
         onLogout();
       }
     } else {
@@ -44,19 +44,19 @@ function Profile() {
     let isFieldUpdated = "";
     if (newValObj.firstName) {
       fieldUpdated = "firstName";
-      isFieldUpdated = newValObj.firstName !== user.firstName;
+      isFieldUpdated = newValObj.firstName !== activeUser.firstName;
     }
     if (newValObj.lastName) {
       fieldUpdated = "lastName";
-      isFieldUpdated = newValObj.lastName !== user.lastName;
+      isFieldUpdated = newValObj.lastName !== activeUser.lastName;
     }
     if (newValObj.email) {
       fieldUpdated = "email";
-      isFieldUpdated = newValObj.email !== user.email;
+      isFieldUpdated = newValObj.email !== activeUser.email;
     }
     if (newValObj.phoneNumber) {
       fieldUpdated = "phoneNumber";
-      isFieldUpdated = newValObj.phoneNumber !== user.phoneNumber;
+      isFieldUpdated = newValObj.phoneNumber !== activeUser.phoneNumber;
     }
 
     if (
@@ -124,13 +124,14 @@ function Profile() {
             }}
           />
           <Form.Text className="text-muted">
-            Changing your email will automatically logged you out.
+            Important: Updating your email will automatically log you out.
           </Form.Text>
         </Form.Group>
+
         <Form.Group className="mb-3">
+          <Form.Label>Phone Number</Form.Label>
           <Form.Control
-            type="tel"
-            placeholder={user.phoneNumber}
+            type="text"
             value={phoneNumber}
             onChange={(e) => {
               setPhoneNumber(e.target.value);
@@ -170,7 +171,6 @@ function Profile() {
             rows={3}
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            placeholder={user.bio}
           />
         </Form.Group>
         <Button

@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "react-bootstrap";
-import UserContext from "../contexts/UserContext";
+import AuthContext from "../contexts/AuthContext";
 import server from "../services/server.js";
 import "../CSS/HomePage.css";
 import DisplayPetsCards from "../components/DisplayPetsCards";
 
 function HomePage() {
-  const { user } = useContext(UserContext);
+  const { activeUser } = useContext(AuthContext);
   const [caredPets, setCaredPets] = useState("");
   const [savedPets, setSavedPets] = useState("");
   const [displayCaredPets, setDisplayCaredPets] = useState(true);
@@ -15,8 +15,8 @@ function HomePage() {
   useEffect(() => {
     async function loadData() {
       const responses = await Promise.all([
-        await server.getPetsByIds(user.caredPetsIds),
-        await server.getPetsByIds(user.savedPetsIds),
+        await server.getPetsByIds(activeUser.caredPetsIds),
+        await server.getPetsByIds(activeUser.savedPetsIds),
       ]);
       setCaredPets(responses[0].data);
       setSavedPets(responses[1].data);
@@ -35,7 +35,7 @@ function HomePage() {
         <div className="homePageWelcomeCardTxt">
           <div id="welcomeHomeTxt">Welcome Home</div>
           <div id="welcomeHomeTxt">
-            {user.firstName + " " + user.lastName} !
+            {activeUser.firstName + " " + activeUser.lastName} !
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Image } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import "../CSS/WelcomePage.css";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";

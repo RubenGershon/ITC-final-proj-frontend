@@ -59,7 +59,7 @@ async function getUserData() {
 async function getUserById(id) {
   try {
     const response = await api.get("/user/" + id);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     if (error.response) {
       return error.response.data;

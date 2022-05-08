@@ -19,12 +19,12 @@ function UserPage() {
         window.location.href.split("/admin/user/")[1]
       );
       const responses = await Promise.all([
-        await server.getPetsByIds(userResponse.caredPetsIds),
-        await server.getPetsByIds(userResponse.savedPetsIds),
+        await server.getPetsByIds(userResponse.data.caredPetsIds),
+        await server.getPetsByIds(userResponse.data.savedPetsIds),
       ]);
-      setUser(userResponse);
-      setCaredPets(responses[0]);
-      setSavedPets(responses[1]);
+      setUser(userResponse.data);
+      setCaredPets(responses[0].data);
+      setSavedPets(responses[1].data);
     }
     loadData();
   }, []);

@@ -4,11 +4,8 @@ import AuthContext from "../contexts/AuthContext";
 
 function AdminProtectedRoute({ children }) {
   const { activeUser } = useContext(AuthContext);
-  if (!activeUser || activeUser.role !== "admin") {
-    return <Navigate to="/" replace />;
-  }
 
-  return <>{children}</>;
+  return <>{activeUser && activeUser.role === "admin" && children}</>;
 }
 
 export default AdminProtectedRoute;

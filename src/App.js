@@ -10,14 +10,12 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import AuthProvider from "./components/AuthProvider";
-import UserProvider from "./components/UserProvider";
 import UserPage from "./pages/UserPage";
 
 function App() {
   return (
     <div style={{ height: "100%" }}>
       <AuthProvider>
-        <UserProvider>
           <NavBar />
           <Routes>
             <Route path="/" element={<WelcomePage />} />
@@ -57,7 +55,6 @@ function App() {
             />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        </UserProvider>
       </AuthProvider>
     </div>
   );

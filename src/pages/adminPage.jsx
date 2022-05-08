@@ -128,6 +128,7 @@ function AdminPage() {
   }
 
   async function deletePetWrapper(id) {
+    //TODO BEfore deleting, need to remove from users lists!!!!
     const response = await server.deletePet(id);
     if (response.status === "ok") {
       setShowModal(true);
