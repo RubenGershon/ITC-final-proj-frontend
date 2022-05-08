@@ -25,9 +25,10 @@ function AuthProvider({ children }) {
     return response;
   }
 
-  function onLogout() {
+  async function onLogout() {
     localStorage.removeItem("activeUser");
     setActiveUser(null);
+    await server.logout()
   }
 
   return (

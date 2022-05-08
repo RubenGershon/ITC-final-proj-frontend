@@ -30,9 +30,9 @@ async function signup(signUpDataObj) {
   }
 }
 
-async function logout(signUpDataObj) {
+async function logout() {
   try {
-    const response = await api.post("/auth/logout", signUpDataObj);
+    const response = await api.post("/auth/logout");
     return response.data;
   } catch (error) {
     if (error.response) {

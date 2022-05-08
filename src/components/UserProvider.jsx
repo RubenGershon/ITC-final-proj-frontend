@@ -5,7 +5,7 @@ import UserContext from "../contexts/UserContext";
 
 function UserProvider({ children }) {
   const [user, setUser] = useState("");
-  const { onLogout } = useContext(AuthContext);
+  const {activeUser, onLogout } = useContext(AuthContext);
 
   useEffect(() => {
     async function loadData() {
@@ -14,7 +14,7 @@ function UserProvider({ children }) {
       else onLogout();
     }
     loadData();
-  }, []);
+  }, [activeUser]);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
