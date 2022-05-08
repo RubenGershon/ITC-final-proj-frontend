@@ -3,13 +3,16 @@ import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import server from "../services/server";
 import PetForm from "../components/PetForm";
-
+import GenericValidationModal from "../components/GenericValidationModal";
+import "../CSS/AdminPage.css"
 
 function AdminPage() {
   const [pets, setPets] = useState(false);
   const [addNewPet, setAddNewPet] = useState(false);
   const [users, setUsers] = useState("");
   const [petToEdit, setPetToEdit] = useState("");
+  const [adminErr, setAdminErr] = useState("");
+  const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
   async function handleSeeUsers() {
@@ -27,8 +30,8 @@ function AdminPage() {
   }
 
   function clearPage() {
-    setUsers("")
-    setPets("")
+    setUsers("");
+    setPets("");
     setAddNewPet(false);
     setPetToEdit("");
   }
@@ -104,8 +107,8 @@ function AdminPage() {
 
                     <Button
                       variant="danger"
-                      onClick={() => {
-                        deletePetWrapper(pet);
+                      onClick={async () => {
+                        await deletePetWrapper(pet._id);
                       }}
                     >
                       Delete
@@ -120,8 +123,11 @@ function AdminPage() {
     );
   }
 
-  function deletePetWrapper() {
-    console.log("Deleting...");
+  async function deletePetWrapper(id) {
+    const response = await server.deletePet(id);
+    if (response.status === "ok") {
+      setShowModal(true);
+    } else setAdminErr(response.message);
   }
 
   return (
@@ -178,6 +184,15 @@ function AdminPage() {
         {pets && displayPets()}
         {addNewPet && displayPetForm()}
         {petToEdit && displayPetForm(petToEdit)}
+        <GenericValidationModal
+          show={showModal}
+          title={"Done!"}
+          body={"Pet Deleted Succesfully."}
+          onClose={() => {
+            setShowModal(false);
+            clearPage();
+          }}
+        />
       </div>
     </div>
   );

@@ -222,6 +222,19 @@ async function unsavePet(petId) {
   }
 }
 
+async function deletePet(petId) {
+  try {
+    const response = await api.delete(`/pet/${petId}`);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 async function adoptPet(petId, data) {
   try {
     const response = await api.post(`/pet/${petId}/adopt`, data);
@@ -263,6 +276,7 @@ export default {
   getPetsByQuery,
   savePet,
   unsavePet,
+  deletePet,
   adoptPet,
   returnPet,
 };
