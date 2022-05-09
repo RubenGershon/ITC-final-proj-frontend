@@ -26,7 +26,7 @@ function HomePage() {
 
   return (
     <div id="homePage">
-      <div id="homePageBanner"></div>
+
       <div id="homePageWelcomeCard">
         <img
           className="homePageWelcomeCardIcon"
@@ -39,10 +39,11 @@ function HomePage() {
           </div>
         </div>
       </div>
+
       <div id="homePageDataArea">
         <div id="homePageBtnsArea">
           <Button
-            variant="outline-primary"
+            variant="primary"
             size="lg"
             onClick={() => {
               setDisplaySavedPets(false);
@@ -53,7 +54,7 @@ function HomePage() {
             Click to display my pets
           </Button>
           <Button
-            variant="outline-primary"
+            variant="primary"
             size="lg"
             onClick={() => {
               setDisplayCaredPets(false);

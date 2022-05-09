@@ -15,7 +15,7 @@ function SearchPage() {
       <div id="searchPageBanner"></div>
       <div id="searchPageBtns">
         <Button
-          variant="outline-primary"
+          variant="primary"
           size="lg"
           onClick={() => setDisplayBasic(true)}
         >
@@ -23,7 +23,7 @@ function SearchPage() {
         </Button>
         &nbsp; &nbsp;
         <Button
-          variant="outline-primary"
+          variant="primary"
           size="lg"
           onClick={() => setDisplayBasic(false)}
         >

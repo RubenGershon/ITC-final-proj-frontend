@@ -2,29 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  height: 94.5%;
-  width: 100%;
-}
-
-#homePageBanner {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  flex-basis: 40%;
+  justify-content: space-evenly;
+  height: 94.7%;
   width: 100%;
   background-image: url("https://res.cloudinary.com/dr6horuoy/image/upload/v1651833082/PetAdoptionImages/banner_ktuurr.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  border-bottom: solid blue;
 }
 
+
 #homePageWelcomeCard {
-  position: absolute;
-  margin-top: 18%;
-  width: 25%;
+  flex-basis: 10%;
   height: 12%;
   font-weight: bold;
   background-color: white;
