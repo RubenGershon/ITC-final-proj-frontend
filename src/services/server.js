@@ -95,6 +95,19 @@ async function updateUser(updatedDataObj) {
   }
 }
 
+async function deleteUser(id) {
+  try {
+    const response = await api.delete("/user/" + id);
+    return response.data;
+  } catch (error) {
+    if (error.response) {
+      return error.response.data;
+    } else {
+      return { status: "error", message: error.message };
+    }
+  }
+}
+
 async function addPet(petDataObj) {
   // Need to send data as form data because of pet image upload
   try {
@@ -269,6 +282,7 @@ export default {
   getUserById,
   getAllUsers,
   updateUser,
+  deleteUser,
   addPet,
   updatePet,
   getPetById,

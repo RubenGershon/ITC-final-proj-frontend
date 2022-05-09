@@ -12,7 +12,8 @@ function AdminPage() {
   const [users, setUsers] = useState("");
   const [petToEdit, setPetToEdit] = useState("");
   const [adminErr, setAdminErr] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [petDeletedModal, setPetDeletedModal] = useState(false);
+  const [userDeletedModal, setUserDeletedModal] = useState(false);
   const navigate = useNavigate();
 
   async function handleSeeUsers() {
@@ -52,24 +53,41 @@ function AdminPage() {
                 className=" my-3"
               >
                 <Card.Body>
-                  <Card.Title>
-                    {user.firstName + " " + user.lastName}
-                  </Card.Title>
-                  <Card.Text>email: {user.email}</Card.Text>
-
-                  <Button
-                    variant="primary"
-                    onClick={() =>
-                      navigate("/admin/user/" + user._id, {
-                        state: {
-                          prevPath: window.location.pathname,
-                          prevBtnText: "<== Back to admin page",
-                        },
-                      })
-                    }
+                  <div
+                    className="d-flex flex-column align-items-center"
+                    style={{
+                      marginBottom: "5%"
+                    }}
                   >
-                    See More
-                  </Button>
+                    <Card.Title>
+                      <b>{user.firstName + " " + user.lastName}</b>
+                    </Card.Title>
+                    <Card.Text>email: {user.email}</Card.Text>
+                  </div>
+
+                  <div className="d-flex justify-content-evenly">
+                    <Button
+                      variant="primary"
+                      onClick={() =>
+                        navigate("/admin/user/" + user._id, {
+                          state: {
+                            prevPath: window.location.pathname,
+                            prevBtnText: "<== Back to admin page",
+                          },
+                        })
+                      }
+                    >
+                      See More
+                    </Button>
+                    <Button
+                      variant="danger"
+                      onClick={async () => {
+                        await deleteUserWrapper(user._id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </div>
                 </Card.Body>
               </Card>
             </Col>
@@ -96,9 +114,11 @@ function AdminPage() {
                   src={pet.imageUrl}
                 />
                 <Card.Body>
-                  <Card.Title>{pet.name}</Card.Title>
+                  <Card.Title className="d-flex flex-column align-items-center">
+                    <b>{pet.name}</b>
+                  </Card.Title>
 
-                  <div className="d-flex justify-content-between">
+                  <div className="d-flex justify-content-evenly">
                     <Button
                       variant="primary"
                       onClick={() => {
@@ -131,7 +151,14 @@ function AdminPage() {
     //TODO BEfore deleting, need to remove from users lists!!!!
     const response = await server.deletePet(id);
     if (response.status === "ok") {
-      setShowModal(true);
+      setPetDeletedModal(true);
+    } else setAdminErr(response.message);
+  }
+
+  async function deleteUserWrapper(id) {
+    const response = await server.deleteUser(id);
+    if (response.status === "ok") {
+      setUserDeletedModal(true);
     } else setAdminErr(response.message);
   }
 
@@ -189,15 +216,28 @@ function AdminPage() {
         {pets && displayPets()}
         {addNewPet && displayPetForm()}
         {petToEdit && displayPetForm(petToEdit)}
-        <GenericValidationModal
-          show={showModal}
-          title={"Done!"}
-          body={"Pet Deleted Succesfully."}
-          onClose={() => {
-            setShowModal(false);
-            clearPage();
-          }}
-        />
+        {petDeletedModal && (
+          <GenericValidationModal
+            show={petDeletedModal}
+            title={"Done!"}
+            body={"Pet Deleted Succesfully."}
+            onClose={() => {
+              setPetDeletedModal(false);
+              clearPage();
+            }}
+          />
+        )}
+        {userDeletedModal && (
+          <GenericValidationModal
+            show={userDeletedModal}
+            title={"Done!"}
+            body={"User Deleted Succesfully."}
+            onClose={() => {
+              setUserDeletedModal(false);
+              clearPage();
+            }}
+          />
+        )}
       </div>
     </div>
   );
