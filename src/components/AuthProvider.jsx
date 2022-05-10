@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import server from "../services/server";
 import AuthContext from "../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function AuthProvider({ children }) {
   const [activeUser, setActiveUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function loadUser() {
@@ -34,6 +36,7 @@ function AuthProvider({ children }) {
   async function onLogout() {
     setActiveUser(null);
     await server.logout();
+    navigate("/");
   }
 
   return (

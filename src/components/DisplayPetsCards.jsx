@@ -15,8 +15,12 @@ function DisplayPetsCards({ pets }) {
             >
               <Card.Img className="cardImg" variant="top" src={pet.imageUrl} />
               <Card.Body>
-                <Card.Title>{pet.name}</Card.Title>
-                <Card.Text>Adoption status: {pet.adoptionStatus}</Card.Text>
+                <Card.Title>
+                  <b>{pet.name}</b>
+                </Card.Title>
+                <Card.Text>
+                  <b>Adoption status:</b> {pet.adoptionStatus}
+                </Card.Text>
 
                 <div className="d-flex justify-content-between">
                   <Button

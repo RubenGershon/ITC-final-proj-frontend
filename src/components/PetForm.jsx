@@ -321,7 +321,7 @@ function PetForm({ pet, cleanPage }) {
           placeholder="..."
         />
       </Form.Group>
-      <Button variant="outline-primary" type="button" onClick={handleAddPet}>
+      <Button variant="primary" type="button" size="lg" onClick={handleAddPet}>
         {pet ? "Edit" : "Add Pet"}
       </Button>
       <br />
