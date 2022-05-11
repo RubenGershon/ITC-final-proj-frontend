@@ -12,12 +12,14 @@ function SearchPage() {
 
   return (
     <div id="searchPage">
-      <div id="searchPageBanner"></div>
       <div id="searchPageBtns">
         <Button
           variant="primary"
           size="lg"
-          onClick={() => setDisplayBasic(true)}
+          onClick={() => {
+            setSearchResults("");
+            setDisplayBasic(true);
+          }}
         >
           Basic Search
         </Button>
@@ -25,11 +27,15 @@ function SearchPage() {
         <Button
           variant="primary"
           size="lg"
-          onClick={() => setDisplayBasic(false)}
+          onClick={() => {
+            setSearchResults("");
+            setDisplayBasic(false);
+          }}
         >
           Advanced Search
         </Button>
       </div>
+
       <div id="searchOptions">
         {displayBasic ? (
           <BasicSearch
@@ -43,6 +49,7 @@ function SearchPage() {
           />
         )}
       </div>
+
       <div id="searchDisplayResults">
         {searchResults && searchResults.length !== 0 && (
           <DisplayPetsCards pets={searchResults} />

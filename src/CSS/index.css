@@ -12,6 +12,11 @@ html {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   line-height: 18.75px;
+  background-image: url("https://res.cloudinary.com/dr6horuoy/image/upload/v1652209126/statics/banner_o8vnij.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
 
 #root {

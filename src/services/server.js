@@ -194,11 +194,13 @@ async function getPetsByIds(listOfPetsIds) {
 }
 
 async function getPetsByQuery(queryObj) {
-  const queryStr = JSON.stringify(queryObj);
+  const query = queryObj
+    ? {
+        params: { queryStr: JSON.stringify(queryObj) },
+      }
+    : "";
   try {
-    const response = await api.get("/pet", {
-      params: { queryStr: queryStr },
-    });
+    const response = await api.get("/pet", query);
     return response.data;
   } catch (error) {
     if (error.response) {

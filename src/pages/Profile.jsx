@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
 import { isEmailValid } from "../services/utils.js";
 import server from "../services/server";
-import "../CSS/ProfilePage.css"
+import "../CSS/ProfilePage.css";
 
 function Profile() {
   const { activeUser, setActiveUser, onLogout } = useContext(AuthContext);
@@ -103,7 +103,7 @@ function Profile() {
 
   return (
     <div id="profilePage">
-      <Form style={{ width: "50%", margin: "auto"}}>
+      <Form style={{ width: "50%", margin: "auto" }}>
         <Form.Group className="mb-3">
           <Form.Label>First Name</Form.Label>
           <Form.Control
@@ -136,9 +136,7 @@ function Profile() {
               handleChange({ email: e.target.value });
             }}
           />
-          <Form.Text className="text-muted">
-            Important: Updating your email will automatically log you out.
-          </Form.Text>
+          <i>Important: Updating your email will automatically log you out.</i>
         </Form.Group>
 
         <Form.Group className="mb-3">

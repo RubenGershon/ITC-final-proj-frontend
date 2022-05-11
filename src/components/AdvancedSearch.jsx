@@ -146,9 +146,25 @@ function AdvancedSearch({ setSearchResults, setServerErr }) {
           />
         </Form.Group>
       </Row>
-      <Button variant="primary" type="button" onClick={handleSearch}>
-        Search
-      </Button>
+      <div className="d-flex justify-content-between">
+        <Button
+          variant="primary"
+          type="button"
+          style={{ marginTop: "5%" }}
+          onClick={handleSearch}
+        >
+          Search
+        </Button>
+
+        <Button
+          variant="success"
+          type="button"
+          style={{ marginTop: "5%" }}
+          onClick={() => setSearchResults("")}
+        >
+          Clear
+        </Button>
+      </div>
     </Form>
   );
 }
