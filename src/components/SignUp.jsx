@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import AuthContext from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { isEmailValid } from "../services/utils.js"
 
 function SignUp({ closeModal }) {
   const { onSignUp } = useContext(AuthContext);
@@ -29,6 +30,10 @@ function SignUp({ closeModal }) {
     if (password !== passwordConf) {
       setSignUpErr("Passwords don't match");
       return;
+    }
+    if (!isEmailValid(email)) {
+      setSignUpErr("You have entered an invalid email address!");
+      return
     }
     try {
       const response = await onSignUp({

@@ -26,6 +26,7 @@ function AuthProvider({ children }) {
 
   async function onSignUp(signUpDataObj) {
     const response = await server.signup(signUpDataObj);
+
     if (response.status === "ok") {
       const response = await server.getUserData();
       setActiveUser(response.data);
@@ -43,7 +44,6 @@ function AuthProvider({ children }) {
     <AuthContext.Provider
       value={{ activeUser, setActiveUser, onLogin, onLogout, onSignUp }}
     >
-      {console.log("PING AUTH-PROVIDER: ", activeUser)}
       {children}
     </AuthContext.Provider>
   );

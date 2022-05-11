@@ -136,18 +136,26 @@ function PetPage() {
   function displayCard() {
     return (
       <div id="petPage">
-        <Card id="petPageCentralCard" border="primary">
-          <Card.Img src={pet.imageUrl} />
+        <Card
+          id="petPageCentralCard"
+          border="primary"
+          style={{boxShadow: "10px 10px 5px lightblue" }}
+        >
+          <Card.Img id="petPagePetImg" src={pet.imageUrl} />
           <Card.Body>
             <Card.Title>
               <b>{pet.name}</b>
             </Card.Title>
             <Card.Text>
               <b>Type: </b> {pet.type} <br />
+              <b>Breed :</b> {pet.breed} <br />
               <b>Color :</b> {pet.color} <br />
               <b>Weight :</b> {pet.weight} <br />
               <b>Height: </b> {pet.height} <br />
               <b>Adoption status:</b> {pet.adoptionStatus} <br />
+              <b>Hypoallergenic:</b> {pet.hypoallergenic ? "True" : "False"}{" "}
+              <br />
+              <b>Dietary Restrictions:</b> {pet.dietaryRestrictions} <br />
               <b>Bio: </b> {pet.bio} <br />
             </Card.Text>
             {activeUser && pet && displayReturnOrAdoptAndFosterBtn()}

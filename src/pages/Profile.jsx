@@ -2,7 +2,9 @@ import React, { useContext, useState } from "react";
 import { Alert, Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
+import { isEmailValid } from "../services/utils.js";
 import server from "../services/server";
+import "../CSS/ProfilePage.css"
 
 function Profile() {
   const { activeUser, setActiveUser, onLogout } = useContext(AuthContext);
@@ -20,6 +22,11 @@ function Profile() {
   const navigate = useNavigate();
 
   async function handleUpdate() {
+    if (!isEmailValid(email)) {
+      setServerErr("You have entered an invalid email address!");
+      return;
+    }
+
     const response = await server.updateUser(updates);
     if (response.status === "ok") {
       const updatedUser = await server.getUserData();
@@ -58,6 +65,10 @@ function Profile() {
       fieldUpdated = "phoneNumber";
       isFieldUpdated = newValObj.phoneNumber !== activeUser.phoneNumber;
     }
+    if (newValObj.bio) {
+      fieldUpdated = "bio";
+      isFieldUpdated = newValObj.bio !== activeUser.bio;
+    }
 
     if (
       newValObj.passwordConf &&
@@ -86,11 +97,13 @@ function Profile() {
     } else {
       setActiveBtn(true);
     }
+
+    console.log(updates);
   }
 
   return (
-    <>
-      <Form style={{ width: "50%", margin: "auto", marginTop: "10%" }}>
+    <div id="profilePage">
+      <Form style={{ width: "50%", margin: "auto"}}>
         <Form.Group className="mb-3">
           <Form.Label>First Name</Form.Label>
           <Form.Control
@@ -170,13 +183,16 @@ function Profile() {
             as="textarea"
             rows={3}
             value={bio}
-            onChange={(e) => setBio(e.target.value)}
+            onChange={(e) => {
+              setBio(e.target.value);
+              handleChange({ bio: e.target.value });
+            }}
           />
         </Form.Group>
         <Button
           active={activeBtn}
           disabled={!activeBtn}
-          variant="outline-primary"
+          variant="primary"
           type="button"
           onClick={handleUpdate}
         >
@@ -184,7 +200,7 @@ function Profile() {
         </Button>
         {serverErr && <Alert variant="danger">{serverErr}</Alert>}
       </Form>
-    </>
+    </div>
   );
 }
 
