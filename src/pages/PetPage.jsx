@@ -3,11 +3,18 @@ import { Alert, Button, Card } from "react-bootstrap";
 import server from "../services/server";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../contexts/AuthContext";
+import GenericValidationModal from "../components/GenericValidationModal";
+
 import "../CSS/PetPage.css";
 
 function PetPage() {
   const { activeUser, setActiveUser } = useContext(AuthContext);
   const [pet, setPet] = useState("");
+  const [isAdopted, setIsAdopted] = useState(false);
+  const [isFostered, setIsFostered] = useState(false);
+  const [isReturned, setIsReturned] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [isUnsaved, setIsUnsaved] = useState(false);
   const [petPageErr, setPetpageErr] = useState("");
   const navigate = useNavigate();
 
@@ -33,6 +40,7 @@ function PetPage() {
           if (adoptResponse.status === "ok") {
             const userResponse = await server.getUserData();
             setActiveUser(userResponse.data);
+            setIsAdopted(true);
           } else setPetpageErr(adoptResponse.message);
         }}
       >
@@ -53,6 +61,7 @@ function PetPage() {
           if (fosterResponse.status === "ok") {
             const userResponse = await server.getUserData();
             setActiveUser(userResponse.data);
+            setIsFostered(true);
           } else setPetpageErr(fosterResponse.message);
         }}
       >
@@ -74,6 +83,7 @@ function PetPage() {
               if (returnResponse.status === "ok") {
                 const userResponse = await server.getUserData();
                 setActiveUser(userResponse.data);
+                setIsReturned(true);
               } else setPetpageErr(returnResponse.message);
             }}
           >
@@ -108,6 +118,7 @@ function PetPage() {
             if (unsaveResponse.status === "ok") {
               const userResponse = await server.getUserData();
               setActiveUser(userResponse.data);
+              setIsUnsaved(true);
             } else setPetpageErr(unsaveResponse.message);
           }}
         >
@@ -124,6 +135,7 @@ function PetPage() {
             if (saveResponse.status === "ok") {
               const userResponse = await server.getUserData();
               setActiveUser(userResponse.data);
+              setIsSaved(true);
             } else setPetpageErr(saveResponse.message);
           }}
         >
@@ -139,7 +151,7 @@ function PetPage() {
         <Card
           id="petPageCentralCard"
           border="primary"
-          style={{boxShadow: "10px 10px 5px lightblue" }}
+          style={{ boxShadow: "10px 10px 5px lightblue" }}
         >
           <Card.Img id="petPagePetImg" src={pet.imageUrl} />
           <Card.Body>
@@ -167,6 +179,61 @@ function PetPage() {
             )}
           </Card.Body>
         </Card>
+        {isAdopted && (
+          <GenericValidationModal
+            show={isAdopted}
+            title={"Wohooo!"}
+            body={`${pet.name} Adopted Succesfully!!!`}
+            onClose={() => {
+              setIsAdopted(false);
+              navigate("/home");
+            }}
+          />
+        )}
+        {isFostered && (
+          <GenericValidationModal
+            show={isFostered}
+            title={"Wohooo!"}
+            body={`${pet.name} Fostered Succesfully!!!`}
+            onClose={() => {
+              setIsFostered(false);
+              navigate("/home");
+            }}
+          />
+        )}
+        {isReturned && (
+          <GenericValidationModal
+            show={isReturned}
+            title={"Done..."}
+            body={`${pet.name} has returned to the Adoption center....He will miss you!`}
+            onClose={() => {
+              setIsReturned(false);
+              navigate("/home");
+            }}
+          />
+        )}
+        {isSaved && (
+          <GenericValidationModal
+            show={isSaved}
+            title={"Done!"}
+            body={`${pet.name} Saved for later.`}
+            onClose={() => {
+              setIsSaved(false);
+              navigate("/home");
+            }}
+          />
+        )}
+        {isUnsaved && (
+          <GenericValidationModal
+            show={isUnsaved}
+            title={"Done!"}
+            body={`${pet.name} is unsaved from your pet's list.`}
+            onClose={() => {
+              setIsUnsaved(false);
+              navigate("/home");
+            }}
+          />
+        )}
       </div>
     );
   }

@@ -86,7 +86,7 @@ function UserPage() {
 
         <div id="homePageBtnsArea">
           <Button
-            variant="outline-primary"
+            variant="primary"
             size="lg"
             onClick={() => {
               setDisplaySavedPets(false);
@@ -97,7 +97,7 @@ function UserPage() {
             Click to display {user.firstName} Cared pets
           </Button>
           <Button
-            variant="outline-primary"
+            variant="primary"
             size="lg"
             onClick={() => {
               setDisplayCaredPets(false);
