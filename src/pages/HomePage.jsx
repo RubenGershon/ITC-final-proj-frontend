@@ -26,11 +26,10 @@ function HomePage() {
 
   return (
     <div id="homePage">
-
       <div id="homePageWelcomeCard">
         <img
           className="homePageWelcomeCardIcon"
-          src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651766277/PetAdoptionImages/toe-icon_nyzsmp.png"
+          src="https://res.cloudinary.com/dr6horuoy/image/upload/v1652212276/statics/toe-icon_qybccr.png"
         />
         <div className="homePageWelcomeCardTxt">
           <div id="welcomeHomeTxt">Welcome Home</div>

@@ -3,16 +3,7 @@
   flex-direction: column;
   height: 94.5%;
   width: 100%;
-}
-
-#bannerArea {
-  display: flex;
-  flex-basis: 50%;
   background-image: url("https://res.cloudinary.com/dr6horuoy/image/upload/v1651767337/PetAdoptionImages/animals_psegcv.jpg");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-bottom: solid black;
 }
 
 #welcomeTxt {
@@ -25,19 +16,12 @@
 }
 
 #dataArea {
-  flex-basis: 50%;
+  flex-basis: 60%;
   background-image: none;
-  background-color: white;
+  background-color: transparent;
   display: flex;
   flex-direction: column;
   width: 100%;
-}
-
-#dataTxt {
-  width: auto;
-  margin: auto;
-  font-size: 40px;
-  font-weight: bold;
 }
 
 #dataShow {

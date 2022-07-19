@@ -49,19 +49,19 @@ function WelcomePage() {
 
   return (
     <div id="welcomePage">
-      <div id="bannerArea">
-        <div id="welcomeTxt">Find your New Best Friend!</div>
-      </div>
-
+      <div id="welcomeTxt">Find your New Best Friend!</div>
       <div id="dataArea">
-        <div id="dataTxt"> Pets Available for Adoption</div>
         <div id="dataShow">
           {randomPets && displayRandomPets()}
-          <Card id="searchCard" border="primary" style={{ width: "15%", boxShadow: "10px 10px 5px lightblue"}}>
+          <Card
+            id="searchCard"
+            border="primary"
+            style={{ width: "15%", boxShadow: "10px 10px 5px lightblue" }}
+          >
             <Card.Img
               className="cardImg"
               variant="top"
-              src="https://res.cloudinary.com/dr6horuoy/image/upload/v1651766277/PetAdoptionImages/toe-icon_nyzsmp.png"
+              src="https://res.cloudinary.com/dr6horuoy/image/upload/v1652212276/statics/toe-icon_qybccr.png"
             />
             <Card.Title>{pets.length} more Pets available!</Card.Title>
             <Card.Body>

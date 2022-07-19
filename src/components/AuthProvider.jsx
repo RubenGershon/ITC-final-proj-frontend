@@ -8,6 +8,7 @@ function AuthProvider({ children }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("HERE");
     async function loadUser() {
       const response = await server.getUserData();
       if (response.status === "ok") setActiveUser(response.data);
